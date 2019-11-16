@@ -1,0 +1,137 @@
+import React from "react";
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+
+//css
+import 'assets/css/views/settingsPage.css';
+
+// core components
+import Button from "components/CustomButtons/Button.js";
+import GridContainer from "components/Grid/GridContainer.js";
+import Parallax from "components/Parallax/Parallax.js";
+import SettingsForm from "views/SettingsPage/SettingsForm.js";
+
+//Actions
+import { selectGoogleFileAction, selectBookingFileAction, selectExpediaFileAction } from '../../redux/actions/FileActions.js';
+
+export class SettingsPage extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  handleGoogleFileChange = (event) => {
+    event.preventDefault()
+    let fileGoogle = event.target.files[0]
+    const { selectGoogleFileAction } = this.props;
+    const reader = new FileReader()
+    reader.onabort = () => console.log('file reading was aborted')
+    reader.onerror = () => console.log('file reading has failed')
+    reader.onload = () => {
+      // Do whatever you want with the file contents
+      const binaryStr = reader.result
+      let json = JSON.parse(binaryStr)
+      selectGoogleFileAction(json)
+    }
+    reader.readAsText(fileGoogle)
+  }
+
+  handleBookingFileChange = (event) => {
+    event.preventDefault()
+    let fileBooking = event.target.files[0]
+    const { selectBookingFileAction } = this.props;
+    const reader = new FileReader()
+    reader.onabort = () => console.log('file reading was aborted')
+    reader.onerror = () => console.log('file reading has failed')
+    reader.onload = () => {
+      // Do whatever you want with the file contents
+      const binaryStr = reader.result
+      let json = JSON.parse(binaryStr)
+      selectBookingFileAction(json)
+    }
+    reader.readAsText(fileBooking)
+  }
+
+  handleExpediaFileChange = (event) => {
+    event.preventDefault()
+    let fileExpedia = event.target.files[0]
+    const { selectExpediaFileAction } = this.props;
+    const reader = new FileReader()
+    reader.onabort = () => console.log('file reading was aborted')
+    reader.onerror = () => console.log('file reading has failed')
+    reader.onload = () => {
+      // Do whatever you want with the file contents
+      const binaryStr = reader.result
+      let json = JSON.parse(binaryStr)
+      selectExpediaFileAction(json)
+    }
+    reader.readAsText(fileExpedia)
+  }
+
+  handleToggleChange = (event) => {
+    event.preventDefault()
+    //TODO
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault()
+    //TODO
+  }
+
+  // onClick = (e, t, rowInfo) => {
+  //   e.preventDefault()
+  //   const { selectAction } = this.props;
+  //   this.setState({
+  //     index: rowInfo.index
+  //   })
+  //   selectAction(rowInfo.original);
+  // }
+
+
+  render() {
+    // const { localPopulation } = this.props;
+    // return (
+    //   <div>
+    //     <Menu onClickDetails={this.onClickDetails}/>
+    //     <Table index={this.state.index} localPopulationList={localPopulation} onClick={this.onClick}/>
+    //   </div>
+    // );
+    return (
+      <div>
+        <Parallax small filter image={require("assets/img/background3.jpg")} />
+        <div className='main mainRaised' > 
+          <div>
+            <div className='container'>
+              <GridContainer justify="center">
+                    <SettingsForm handleGoogleFileChange={this.handleGoogleFileChange} handleBookingFileChange={this.handleBookingFileChange} handleExpediaFileChange={this.handleExpediaFileChange} handleSubmit={this.handleSubmit}/>
+              </GridContainer>
+          </div>    
+        </div>
+        </div>
+      </div>
+    );
+  }
+}
+
+SettingsPage.propTypes = {
+  fileGoogle: PropTypes.object,
+  fileBooking: PropTypes.object,
+  fileExpedia: PropTypes.object
+};
+
+const mapStateToProps = (state) => {
+  return {
+    fileGoogle: state.fileGoogle,
+    fileBooking: state.fileBooking,
+    fileExpedia: state.fileExpedia
+  };
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    selectGoogleFileAction: (fileGoogle) => {dispatch(selectGoogleFileAction(fileGoogle));},
+    selectBookingFileAction: (fileBooking) => {dispatch(selectBookingFileAction(fileBooking));},
+    selectExpediaFileAction: (fileExpedia) => {dispatch(selectExpediaFileAction(fileExpedia));}
+  }
+}   
+
+export default connect(mapStateToProps, mapDispatchToProps)(SettingsPage);
