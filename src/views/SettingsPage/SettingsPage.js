@@ -11,6 +11,8 @@ import GridContainer from "components/Grid/GridContainer.js";
 import Parallax from "components/Parallax/Parallax.js";
 import SettingsForm from "views/SettingsPage/SettingsForm.js";
 
+import { compare } from "utils/fileUtils.js";
+
 //Actions
 import { selectGoogleFileAction, selectBookingFileAction, selectExpediaFileAction } from '../../redux/actions/FileActions.js';
 
@@ -30,6 +32,8 @@ export class SettingsPage extends React.Component {
       // Do whatever you want with the file contents
       const binaryStr = reader.result
       let json = JSON.parse(binaryStr)
+      let sorted = json.Hoteles.sort(compare);
+      json.Hoteles = sorted
       selectGoogleFileAction(json)
     }
     reader.readAsText(fileGoogle)
@@ -46,6 +50,8 @@ export class SettingsPage extends React.Component {
       // Do whatever you want with the file contents
       const binaryStr = reader.result
       let json = JSON.parse(binaryStr)
+      let sorted = json.Hoteles.sort(compare);
+      json.Hoteles = sorted
       selectBookingFileAction(json)
     }
     reader.readAsText(fileBooking)
@@ -62,6 +68,8 @@ export class SettingsPage extends React.Component {
       // Do whatever you want with the file contents
       const binaryStr = reader.result
       let json = JSON.parse(binaryStr)
+      let sorted = json.Hoteles.sort(compare);
+      json.Hoteles = sorted
       selectExpediaFileAction(json)
     }
     reader.readAsText(fileExpedia)

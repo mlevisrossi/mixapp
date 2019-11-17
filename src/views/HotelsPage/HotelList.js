@@ -39,7 +39,7 @@ export default class HotelList extends React.Component {
                       tabContent: (
                         <span>
                           {(this.props.fileGoogle).Hoteles.map((hotel, i) => {
-							              return <p>{hotel.name}</p>
+                          return <p>{hotel.name + ", " + hotel.rating}</p>
                           })}
                         </span>
                       )
@@ -50,7 +50,7 @@ export default class HotelList extends React.Component {
                       tabContent: (
                         <span>
                           {(this.props.fileBooking).Hoteles.map((hotel, i) => {
-							              return <p>{hotel.name}</p>
+							              return <p>{hotel.name + ", " + hotel.rating}</p>
                           })}
                         </span>
                       )
@@ -61,7 +61,7 @@ export default class HotelList extends React.Component {
                       tabContent: (
                         <span>
                           {(this.props.fileExpedia).Hoteles.map((hotel, i) => {
-							              return <p>{hotel.name}</p>
+							              return <p>{hotel.name + ", " + hotel.rating}</p>
                           })}
                         </span>
                       )
