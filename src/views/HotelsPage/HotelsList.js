@@ -49,7 +49,8 @@ const useStyles = makeStyles(theme => ({
 export default function HotelsList({hotelsList}) {
   const classes = useStyles();
 
-  return (
+  if(hotelsList !== undefined) {
+   return (
     <List className={classes.root}>
       {hotelsList.map((hotel, i) => {
         return (
@@ -93,4 +94,9 @@ export default function HotelsList({hotelsList}) {
      })}  
     </List>
   );
+} else {
+  return (
+    <div> Ningun archivo seleccionado. </div>
+  )
+}
 }
