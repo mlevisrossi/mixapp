@@ -7,7 +7,9 @@ import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import NavPills from "components/NavPills/NavPills.js";
 import Parallax from "components/Parallax/Parallax.js";
-import HotelList from "views/HotelsPage/HotelList.js";
+import HotelListContainer from "views/HotelsPage/HotelListContainer.js";
+import HotelsList from "views/HotelsPage/HotelsList.js";
+import Hotel from "@material-ui/icons/Hotel";
 
 //css
 import 'assets/css/views/hotelsPage.css';
@@ -36,7 +38,47 @@ export class HotelsPage extends React.Component {
         </Parallax>
 
         <div className='main mainRaised'>
-          <HotelList fileGoogle={this.props.fileGoogle} fileBooking={this.props.fileBooking} fileExpedia={this.props.fileExpedia}/>
+          <div className='section'>
+          <div className='container'>
+            <div id="navigation-pills">
+              <GridContainer justify="center">
+                <GridItem xs={12} sm={12} md={12} lg={6}>
+                  <NavPills
+                    active= {1}
+                    color="rose"
+                    horizontal={{
+                      tabsGrid: { xs: 12, sm: 4, md: 4 },
+                      contentGrid: { xs: 12, sm: 8, md: 8 }
+                    }}
+                    tabs={[
+                      {
+                        tabButton: "Google",
+                        tabIcon: Hotel,
+                        tabContent: (
+                          <HotelsList hotelsList={(this.props.fileGoogle.Hoteles)}/>
+                        )
+                      },
+                      {
+                        tabButton: "Booking",
+                        tabIcon: Hotel,
+                        tabContent: (
+                          <HotelsList hotelsList={(this.props.fileBooking.Hoteles)}/>
+                        )
+                      },
+                      {
+                        tabButton: "Expedia",
+                        tabIcon: Hotel,
+                        tabContent: (
+                          <HotelsList hotelsList={(this.props.fileExpedia.Hoteles)}/>
+                        )
+                      }
+                    ]}
+                  />
+                </GridItem>
+              </GridContainer>
+            </div>
+          </div>
+        </div>
         </div>
       </div>
     );
