@@ -26,15 +26,16 @@ export default function HeaderLinks(props) {
   return (
     <List className={classes.list}>
       <ListItem className={classes.listItem}>
-        <Button
-          href={"/settings"}
-          link={true}
-          color="transparent"
-          className={classes.navLink}
-        >
-          <SettingsIcon />
-          Configuración
-        </Button>
+        <Link to={"/settings"} className={classes.link}>
+          <Button
+            link={true}
+            color="transparent"
+            className={classes.navLink}
+          >
+            <SettingsIcon />
+            Configuración
+          </Button>
+        </Link>
       </ListItem>
       <ListItem className={classes.listItem}>
         <CustomDropdown
@@ -59,13 +60,14 @@ export default function HeaderLinks(props) {
         />
       </ListItem>
       <ListItem className={classes.listItem}>
-        <Button
-          href="/"
-          color="transparent"
-          className={classes.navLink}
-        >
-          Orden total de hoteles
-        </Button>
+        <Link to={"/"} className={classes.link}>
+          <Button
+            color="transparent"
+            className={classes.navLink}
+          >
+            Orden total de hoteles
+          </Button>
+        </Link>
       </ListItem>
     </List>
   );

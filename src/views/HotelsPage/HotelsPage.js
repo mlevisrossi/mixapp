@@ -7,7 +7,6 @@ import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import NavPills from "components/NavPills/NavPills.js";
 import Parallax from "components/Parallax/Parallax.js";
-import HotelListContainer from "views/HotelsPage/HotelListContainer.js";
 import HotelsList from "views/HotelsPage/HotelsList.js";
 import Hotel from "@material-ui/icons/Hotel";
 

@@ -111,6 +111,13 @@ const headerLinksStyle = theme => ({
   ...tooltip,
   marginRight5: {
     marginRight: "5px"
+  },
+
+  link: {
+    color: "inherit",
+    "&:hover,&:focus": {
+      color: "inherit"
+    },
   }
 });
 
