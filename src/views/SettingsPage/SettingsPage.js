@@ -13,6 +13,7 @@ import SettingsForm from "views/SettingsPage/SettingsForm.js";
 
 import { compare } from "utils/fileUtils.js";
 import { createDictionary } from "utils/dictionary.js";
+import { generateTuples } from "utils/tuplesGenerator.js";
 
 //Actions
 import { selectGoogleFileAction, selectBookingFileAction, selectExpediaFileAction } from '../../redux/actions/FileActions.js';
@@ -83,30 +84,15 @@ export class SettingsPage extends React.Component {
 
   handleSubmit = (event) => {
     const { createDictAction } = this.props;
-    console.log("Submit clicked");
-    let dict = createDictionary(this.props.fileGoogle, this.props.fileBooking, this.props.fileExpedia);
-    createDictAction(dict);
-    //TODO
+    let dictionary = createDictionary(this.props.fileGoogle, this.props.fileBooking, this.props.fileExpedia);
+    createDictAction(dictionary);
+
+    let googleTuples = generateTuples(this.props.fileGoogle, dictionary);
+    let bookingTuples = generateTuples(this.props.fileBooking, dictionary);
+    let expediaTuples = generateTuples(this.props.fileExpedia, dictionary);
   }
 
-  // onClick = (e, t, rowInfo) => {
-  //   e.preventDefault()
-  //   const { selectAction } = this.props;
-  //   this.setState({
-  //     index: rowInfo.index
-  //   })
-  //   selectAction(rowInfo.original);
-  // }
-
-
   render() {
-    // const { localPopulation } = this.props;
-    // return (
-    //   <div>
-    //     <Menu onClickDetails={this.onClickDetails}/>
-    //     <Table index={this.state.index} localPopulationList={localPopulation} onClick={this.onClick}/>
-    //   </div>
-    // );
     return (
       <div>
         <Parallax small filter image={require("assets/img/background3.jpg")} />
