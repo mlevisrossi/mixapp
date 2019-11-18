@@ -12,9 +12,11 @@ import Parallax from "components/Parallax/Parallax.js";
 import SettingsForm from "views/SettingsPage/SettingsForm.js";
 
 import { compare } from "utils/fileUtils.js";
+import { createDictionary } from "utils/dictionary.js";
 
 //Actions
 import { selectGoogleFileAction, selectBookingFileAction, selectExpediaFileAction } from '../../redux/actions/FileActions.js';
+import { createDictAction } from '../../redux/actions/DictionaryActions.js';
 
 export class SettingsPage extends React.Component {
   constructor(props) {
@@ -29,7 +31,6 @@ export class SettingsPage extends React.Component {
     reader.onabort = () => console.log('file reading was aborted')
     reader.onerror = () => console.log('file reading has failed')
     reader.onload = () => {
-      // Do whatever you want with the file contents
       const binaryStr = reader.result
       let json = JSON.parse(binaryStr)
       let sorted = json.Hoteles.sort(compare);
@@ -81,7 +82,10 @@ export class SettingsPage extends React.Component {
   }
 
   handleSubmit = (event) => {
-    event.preventDefault()
+    const { createDictAction } = this.props;
+    console.log("Submit clicked");
+    let dict = createDictionary(this.props.fileGoogle, this.props.fileBooking, this.props.fileExpedia);
+    createDictAction(dict);
     //TODO
   }
 
@@ -123,14 +127,16 @@ export class SettingsPage extends React.Component {
 SettingsPage.propTypes = {
   fileGoogle: PropTypes.object,
   fileBooking: PropTypes.object,
-  fileExpedia: PropTypes.object
+  fileExpedia: PropTypes.object,
+  hotelsDict: PropTypes.object
 };
 
 const mapStateToProps = (state) => {
   return {
     fileGoogle: state.fileGoogle,
     fileBooking: state.fileBooking,
-    fileExpedia: state.fileExpedia
+    fileExpedia: state.fileExpedia,
+    hotelsDict: state.hotelsDict
   };
 }
 
@@ -138,7 +144,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     selectGoogleFileAction: (fileGoogle) => {dispatch(selectGoogleFileAction(fileGoogle));},
     selectBookingFileAction: (fileBooking) => {dispatch(selectBookingFileAction(fileBooking));},
-    selectExpediaFileAction: (fileExpedia) => {dispatch(selectExpediaFileAction(fileExpedia));}
+    selectExpediaFileAction: (fileExpedia) => {dispatch(selectExpediaFileAction(fileExpedia));},
+    createDictAction: (hotelsDict) => {dispatch(createDictAction(hotelsDict));}
   }
 }   
 

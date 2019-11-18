@@ -39,7 +39,7 @@ export default function SettingsForm(props) {
                         labelPlacement="start"
                     />
 
-                    <input type="submit" value="Submit" />
+                    <input type="submit" value="Submit" onClick={props.handleSubmit}/>
                 </FormGroup>
             </FormControl>
         </GridItem>

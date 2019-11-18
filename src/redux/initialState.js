@@ -1,7 +1,8 @@
 const initialState = {
     fileGoogle: {},
     fileBooking: {},
-    fileExpedia: {}
+    fileExpedia: {},
+    hotelsDict: {}
 }
 
 export default initialState;
