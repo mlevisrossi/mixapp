@@ -9,6 +9,8 @@ import { Label } from "@material-ui/icons";
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { FilePond } from 'react-filepond';
 
+import PreferenceInput from "views/SettingsPage/PreferenceInput.js";
+
 import FileInput from "components/FileInput/FileInput";
 
 export default function SettingsForm(props) {
@@ -38,6 +40,8 @@ export default function SettingsForm(props) {
                         label="Descartar hoteles"
                         labelPlacement="start"
                     />
+
+                    <PreferenceInput />
 
                     <input type="submit" value="Submit" onClick={props.handleSubmit}/>
                 </FormGroup>

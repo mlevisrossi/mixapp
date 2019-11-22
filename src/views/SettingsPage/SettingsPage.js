@@ -14,6 +14,7 @@ import SettingsForm from "views/SettingsPage/SettingsForm.js";
 import { compare } from "utils/fileUtils.js";
 import { createDictionary } from "utils/dictionary.js";
 import { generateTuples } from "utils/tuplesGenerator.js";
+import { getExtendedOrderFromApiAsync } from "services/connectionService.js";
 
 //Actions
 import { selectGoogleFileAction, selectBookingFileAction, selectExpediaFileAction } from '../../redux/actions/FileActions.js';
@@ -90,6 +91,16 @@ export class SettingsPage extends React.Component {
     let googleTuples = generateTuples(this.props.fileGoogle, dictionary);
     let bookingTuples = generateTuples(this.props.fileBooking, dictionary);
     let expediaTuples = generateTuples(this.props.fileExpedia, dictionary);
+
+    getExtendedOrderFromApiAsync(
+      {
+        "googleTuples": googleTuples,
+        "bookingTuples": bookingTuples,
+        "expediaTuples": expediaTuples,
+        "taxonomy": [1, 2, 3]
+      }
+    );
+    
   }
 
   render() {
