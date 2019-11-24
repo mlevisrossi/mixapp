@@ -9,6 +9,8 @@ import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import NavPills from "components/NavPills/NavPills.js";
 import Parallax from "components/Parallax/Parallax.js";
+import SettingsPage from "views/SettingsPage/SettingsPage.js";
+import HotelsPage from "views/HotelsPage/HotelsPage.js";
 
 import styles from "assets/jss/material-kit-react/views/homePage.js";
 
@@ -16,24 +18,26 @@ const useStyles = makeStyles(styles);
 
 export default function HomePage(props) {
   const classes = useStyles();
-  const navImageClasses = classNames(classes.imgRounded, classes.imgGallery);
   return (
     <div>
-      <Parallax small filter image={require("assets/img/background3.jpg")} />
+      <Parallax small filter image={require("assets/img/vacations.jpg")}>
+      <div className={classes.container}>
+          <GridContainer>
+            <GridItem>
+              <div className={classes.brand}>
+                <h1 className={classes.title}>Mica App.</h1>
+                <h3 className={classes.subtitle}>
+                  Integración de servicios de sistemas de reputación
+                </h3>
+              </div>
+            </GridItem>
+          </GridContainer>
+        </div>
+      </Parallax>
+
       <div className={classNames(classes.main, classes.mainRaised)}>
-        <div>
-          <div className={classes.container}>
-            <GridContainer justify="center">
-              <GridItem xs={12} sm={12} md={6}>
-                <div className={classes.profile}>
-                  <div className={classes.name}>
-                    <h3 className={classes.title}>Home Page</h3>
-                  </div>
-                </div>
-              </GridItem>
-            </GridContainer>
-        </div>    
-      </div>
+        <SettingsPage/>
+        <HotelsPage/>
       </div>
     </div>
   );

@@ -6,9 +6,9 @@ import Button from "components/CustomButtons/Button.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import NavPills from "components/NavPills/NavPills.js";
-import Parallax from "components/Parallax/Parallax.js";
 import HotelsList from "views/HotelsPage/HotelsList.js";
 import Hotel from "@material-ui/icons/Hotel";
+import CustomTabs from "components/CustomTabs/CustomTabs.js";
 
 //css
 import 'assets/css/views/hotelsPage.css';
@@ -20,66 +20,49 @@ export class HotelsPage extends React.Component {
 
   render() {
     return (
-      <div>
-        <Parallax small filter image={require("assets/img/background3.jpg")}>
-          <div className='container'>
-            <GridContainer>
-              <GridItem>
-                <div className='brand'>
-                  <h1 className='title'>MICA APP.</h1>
-                  <h3 className='subtitle'>
-                    Ordenes de hoteles en las diferentes plataformas
-                  </h3>
+        <div className='hotelsSection' >
+            <GridContainer alignItems="flex-start" justify="center">
+              <GridItem xs={8}>
+                <div className='settings-title'>
+                  <h2>Ordenes de Hoteles</h2>
+                  <br />
                 </div>
+                <CustomTabs
+                  headerColor="info"
+                  tabs={[
+                    {
+                      tabName: "Google",
+                      tabIcon: Hotel,
+                      tabContent: (
+                        <HotelsList hotelsList={(this.props.fileGoogle.Hoteles)} className='textCenter'/>
+                      )
+                    },
+                    {
+                      tabName: "Booking",
+                      tabIcon: Hotel,
+                      tabContent: (
+                        <HotelsList hotelsList={(this.props.fileBooking.Hoteles)} className='textCenter'/>
+                      )
+                    },
+                    {
+                      tabName: "Expedia",
+                      tabIcon: Hotel,
+                      tabContent: (
+                        <HotelsList hotelsList={(this.props.fileExpedia.Hoteles)} className='textCenter'/>
+                      )
+                    },
+                    {
+                      tabName: "Orden total",
+                      tabIcon: Hotel,
+                      tabContent: (
+                        <p>Aca va el resultado de multicontext</p>
+                      )
+                    }
+                  ]}
+                />
               </GridItem>
             </GridContainer>
           </div>
-        </Parallax>
-
-        <div className='main mainRaised'>
-          <div className='section'>
-          <div className='container'>
-            <div id="navigation-pills">
-              <GridContainer justify="center">
-                <GridItem xs={12} sm={12} md={12} lg={6}>
-                  <NavPills
-                    active= {1}
-                    color="rose"
-                    horizontal={{
-                      tabsGrid: { xs: 12, sm: 4, md: 4 },
-                      contentGrid: { xs: 12, sm: 8, md: 8 }
-                    }}
-                    tabs={[
-                      {
-                        tabButton: "Google",
-                        tabIcon: Hotel,
-                        tabContent: (
-                          <HotelsList hotelsList={(this.props.fileGoogle.Hoteles)}/>
-                        )
-                      },
-                      {
-                        tabButton: "Booking",
-                        tabIcon: Hotel,
-                        tabContent: (
-                          <HotelsList hotelsList={(this.props.fileBooking.Hoteles)}/>
-                        )
-                      },
-                      {
-                        tabButton: "Expedia",
-                        tabIcon: Hotel,
-                        tabContent: (
-                          <HotelsList hotelsList={(this.props.fileExpedia.Hoteles)}/>
-                        )
-                      }
-                    ]}
-                  />
-                </GridItem>
-              </GridContainer>
-            </div>
-          </div>
-        </div>
-        </div>
-      </div>
     );
   }
 }

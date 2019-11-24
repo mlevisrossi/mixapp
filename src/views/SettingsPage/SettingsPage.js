@@ -10,11 +10,13 @@ import Button from "components/CustomButtons/Button.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import Parallax from "components/Parallax/Parallax.js";
 import SettingsForm from "views/SettingsPage/SettingsForm.js";
+import GridItem from "components/Grid/GridItem.js";
 
 import { compare } from "utils/fileUtils.js";
 import { createDictionary } from "utils/dictionary.js";
 import { generateTuples } from "utils/tuplesGenerator.js";
 import { getExtendedOrderFromApiAsync } from "services/connectionService.js";
+import arrayMove from 'array-move';
 
 //Actions
 import { selectGoogleFileAction, selectBookingFileAction, selectExpediaFileAction } from '../../redux/actions/FileActions.js';
@@ -23,6 +25,10 @@ import { createDictAction } from '../../redux/actions/DictionaryActions.js';
 export class SettingsPage extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      taxonomyItems: ['Google', 'Booking', 'Expedia'],
+      minComments: 0
+    }
   }
 
   handleGoogleFileChange = (event) => {
@@ -78,12 +84,38 @@ export class SettingsPage extends React.Component {
     reader.readAsText(fileExpedia)
   }
 
-  handleToggleChange = (event) => {
-    event.preventDefault()
-    //TODO
+  onSortEnd = ({oldIndex, newIndex}) => {
+    this.setState(({taxonomyItems}) => ({
+      taxonomyItems: arrayMove(taxonomyItems, oldIndex, newIndex),
+    }));
+  };
+
+  handleSliderChange = (minComments) => {
+    this.setState(({minComments}) => ({
+      minComments: minComments
+    }));
+  };
+
+  constructTaxonomyArray = (taxonomyItems) => {
+    let taxonomyArray = new Array();
+    let googleIndex = taxonomyItems.indexOf('Google');
+    taxonomyArray.push(googleIndex + 1);
+    let bookingIndex = taxonomyItems.indexOf('Booking');
+    taxonomyArray.push(bookingIndex + 1);
+    let expediaIndex = taxonomyItems.indexOf('Expedia');
+    taxonomyArray.push(expediaIndex + 1);
+
+    return taxonomyArray
   }
 
   handleSubmit = (event) => {
+
+    //guardar los archivos en redux
+    //tomar valor de taxonomia
+    //Crear diccionario y guardarlo en redux
+    //Generar tuplas y hacer llamada a api
+    let taxonomyArray = this.constructTaxonomyArray(this.state.taxonomyItems);
+
     const { createDictAction } = this.props;
     let dictionary = createDictionary(this.props.fileGoogle, this.props.fileBooking, this.props.fileExpedia);
     createDictAction(dictionary);
@@ -97,7 +129,7 @@ export class SettingsPage extends React.Component {
         "googleTuples": googleTuples,
         "bookingTuples": bookingTuples,
         "expediaTuples": expediaTuples,
-        "taxonomy": [1, 2, 3]
+        "taxonomy": taxonomyArray
       }
     );
     
@@ -105,18 +137,18 @@ export class SettingsPage extends React.Component {
 
   render() {
     return (
-      <div>
-        <Parallax small filter image={require("assets/img/background3.jpg")} />
-        <div className='main mainRaised' > 
-          <div>
-            <div className='container'>
-              <GridContainer justify="center">
-                    <SettingsForm handleGoogleFileChange={this.handleGoogleFileChange} handleBookingFileChange={this.handleBookingFileChange} handleExpediaFileChange={this.handleExpediaFileChange} handleSubmit={this.handleSubmit}/>
-              </GridContainer>
-          </div>    
+        <div className='settings-sections'>
+          <div className='settings-container'>
+            <SettingsForm 
+              handleGoogleFileChange={this.handleGoogleFileChange} 
+              handleBookingFileChange={this.handleBookingFileChange} 
+              handleExpediaFileChange={this.handleExpediaFileChange} 
+              handleSubmit={this.handleSubmit}
+              taxonomyItems={this.state.taxonomyItems}
+              onSortEnd={this.onSortEnd}
+            />
+          </div>
         </div>
-        </div>
-      </div>
     );
   }
 }
