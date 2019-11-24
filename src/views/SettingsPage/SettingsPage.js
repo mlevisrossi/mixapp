@@ -6,11 +6,7 @@ import PropTypes from 'prop-types';
 import 'assets/css/views/settingsPage.css';
 
 // core components
-import Button from "components/CustomButtons/Button.js";
-import GridContainer from "components/Grid/GridContainer.js";
-import Parallax from "components/Parallax/Parallax.js";
 import SettingsForm from "views/SettingsPage/SettingsForm.js";
-import GridItem from "components/Grid/GridItem.js";
 
 import { compare } from "utils/fileUtils.js";
 import { createDictionary } from "utils/dictionary.js";
@@ -90,10 +86,8 @@ export class SettingsPage extends React.Component {
     }));
   };
 
-  handleSliderChange = (minComments) => {
-    this.setState(({minComments}) => ({
-      minComments: minComments
-    }));
+  handleSliderChange = (event, minComments) => {
+    this.setState({...this.state, minComments});
   };
 
   constructTaxonomyArray = (taxonomyItems) => {
@@ -110,7 +104,7 @@ export class SettingsPage extends React.Component {
 
   handleSubmit = (event) => {
 
-    //guardar los archivos en redux
+    //guardar los archivos ordenados y filtrados en redux
     //tomar valor de taxonomia
     //Crear diccionario y guardarlo en redux
     //Generar tuplas y hacer llamada a api
@@ -146,6 +140,8 @@ export class SettingsPage extends React.Component {
               handleSubmit={this.handleSubmit}
               taxonomyItems={this.state.taxonomyItems}
               onSortEnd={this.onSortEnd}
+              handleSliderChange={this.handleSliderChange}
+              sliderValue = {this.state.minComments}
             />
           </div>
         </div>

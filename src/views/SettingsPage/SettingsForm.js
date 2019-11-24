@@ -157,7 +157,8 @@ export default class SettingsForm extends React.Component {
                         <Typography id="labelSlider" className='labelSlider' >Descartar hoteles con un minimo de comentarios </Typography>
                         <Slider
                             track="inverted"
-                            defaultValue={0}
+                            value={this.props.sliderValue}
+                            onChange={this.props.handleSliderChange}
                             aria-labelledby="labelSlider"
                             valueLabelDisplay="auto"
                             min={0}
