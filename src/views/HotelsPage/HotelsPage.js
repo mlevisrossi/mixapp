@@ -9,9 +9,18 @@ import NavPills from "components/NavPills/NavPills.js";
 import HotelsList from "views/HotelsPage/HotelsList.js";
 import Hotel from "@material-ui/icons/Hotel";
 import CustomTabs from "components/CustomTabs/CustomTabs.js";
+import ListContainer from "views/HotelsPage/ListContainer.js";
 
 //css
 import 'assets/css/views/hotelsPage.css';
+
+function List(props) {
+  let condition = props.condition;
+  if (condition){
+    return <ListContainer data={(props.data)}/>;
+  }
+  return null;
+};
 
 export class HotelsPage extends React.Component {
   constructor(props) {
@@ -34,21 +43,21 @@ export class HotelsPage extends React.Component {
                       tabName: "Google",
                       tabIcon: Hotel,
                       tabContent: (
-                        <HotelsList hotelsList={(this.props.fileGoogleSaved.Hoteles)} className='textCenter'/>
+                        <List condition={(this.props.fileGoogleSaved.Hoteles)!== undefined} data={this.props.fileGoogleSaved.Hoteles} />
                       )
                     },
                     {
                       tabName: "Booking",
                       tabIcon: Hotel,
                       tabContent: (
-                        <HotelsList hotelsList={(this.props.fileBookingSaved.Hoteles)} className='textCenter'/>
+                        <List condition={(this.props.fileBookingSaved.Hoteles)!== undefined} data={this.props.fileBookingSaved.Hoteles} />
                       )
                     },
                     {
                       tabName: "Expedia",
                       tabIcon: Hotel,
                       tabContent: (
-                        <HotelsList hotelsList={(this.props.fileExpediaSaved.Hoteles)} className='textCenter'/>
+                        <List condition={(this.props.fileExpediaSaved.Hoteles)!== undefined} data={this.props.fileExpediaSaved.Hoteles} />
                       )
                     },
                     {
