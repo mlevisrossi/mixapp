@@ -7,6 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
+import Paginations from "components/Pagination/Pagination.js";
 
 //icons
 import StarIcon from '@material-ui/icons/Star';
@@ -51,52 +52,66 @@ export default function HotelsList({hotelsList}) {
 
   if(hotelsList !== undefined) {
    return (
-    <List className={classes.root}>
-      {hotelsList.map((hotel, i) => {
-        return (
-            <div> 
-                <ListItem alignItems="flex-start">
-                    <ListItemAvatar>
-                        <Avatar>H</Avatar>
-                    </ListItemAvatar>
-                    <ListItemText
-                        primary={hotel.name}
-                        secondary={
-                            <React.Fragment>
-                                <Typography
-                                    component="span"
-                                    variant="body2"
-                                    className={classes.inline}
-                                    color="textPrimary"
-                                >
-                                <div>
-                                    <div class="mdl-card__supporting-text">
-                                        <StarIcon titleAccess="Reputación" className={classes.ratingIcon} />
-                                        {" " + hotel.rating} <br />
-                                    </div>
-                                    <div class="mdl-card__supporting-text">
-                                        <CommentIcon titleAccess="Reseñas" className={classes.reviewsIcon}/>
-                                        {" " + hotel.reviews} <br />
-                                    </div>
-                                    <div class="mdl-card__supporting-text">
-                                        <AttachMoneyIcon titleAccess="Precio" className={classes.priceIcon}/>
-                                        {" " + hotel.price}
-                                    </div>                    
-                                </div>
-                                </Typography>
-                            </React.Fragment>
-                        }
-                    />
-                </ListItem>
-                <Divider variant="inset" component="li" />
-            </div> 
-        )
-     })}  
-    </List>
+    <div>
+      <List className={classes.root}>
+        {hotelsList.map((hotel, i) => {
+          return (
+              <div> 
+                  <ListItem alignItems="flex-start">
+                      <ListItemAvatar>
+                          <Avatar>H</Avatar>
+                      </ListItemAvatar>
+                      <ListItemText
+                          primary={hotel.name}
+                          secondary={
+                              <React.Fragment>
+                                  <Typography
+                                      component="span"
+                                      variant="body2"
+                                      className={classes.inline}
+                                      color="textPrimary"
+                                  >
+                                  <div>
+                                      <div className="mdl-card__supporting-text">
+                                          <StarIcon titleAccess="Reputación" className={classes.ratingIcon} />
+                                          {" " + hotel.rating} <br />
+                                      </div>
+                                      <div className="mdl-card__supporting-text">
+                                          <CommentIcon titleAccess="Reseñas" className={classes.reviewsIcon}/>
+                                          {" " + hotel.reviews} <br />
+                                      </div>
+                                      <div className="mdl-card__supporting-text">
+                                          <AttachMoneyIcon titleAccess="Precio" className={classes.priceIcon}/>
+                                          {" " + hotel.price}
+                                      </div>                    
+                                  </div>
+                                  </Typography>
+                              </React.Fragment>
+                          }
+                      />
+                  </ListItem>
+                  <Divider variant="inset" component="li" />
+              </div> 
+          )
+      })}  
+      </List>
+      <Paginations
+        pages={[
+          { text: "PREV" },
+          { active: true, text: 1 },
+          { text: 2 },
+          { text: 3 },
+          { text: 4 },
+          { text: 5 },
+          { text: "NEXT" }
+        ]}
+        color="info"
+      />
+    </div>
   );
 } else {
   return (
-    <div> Ningun archivo seleccionado. </div>
+    <div> Por favor, seleccione un archivo. </div>
   )
 }
 }

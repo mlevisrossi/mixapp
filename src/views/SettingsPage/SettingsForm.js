@@ -90,7 +90,7 @@ export default class SettingsForm extends React.Component {
 
             <GridContainer justify="center" spacing={0} alignItems="flex-start" direction="row">
                 
-                <GridItem xs={4} alignItems="strech">
+                <GridItem xs={4}>
 
                     <div className='settings-title'>
                         <h2>Configuración</h2>
@@ -169,7 +169,7 @@ export default class SettingsForm extends React.Component {
 
                 </GridItem>
 
-                <GridItem xs={4} alignItems="center">
+                <GridItem xs={4}>
 
                     <div className='settings-title'>
                         <h2>   </h2>
@@ -188,9 +188,9 @@ export default class SettingsForm extends React.Component {
             </GridContainer>
 
             <GridContainer justify="center">
-                <GridItem xs={1} justify="center">
+                <GridItem xs={1} >
                     
-                    <div alignItems="center">
+                    <div align-items="center">
                         <Button color="primary" onClick={this.props.handleSubmit}>
                             Aplicar
                         </Button>

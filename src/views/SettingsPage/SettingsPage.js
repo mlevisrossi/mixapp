@@ -15,7 +15,18 @@ import { getExtendedOrderFromApiAsync } from "services/connectionService.js";
 import arrayMove from 'array-move';
 
 //Actions
-import { selectGoogleFileAction, selectBookingFileAction, selectExpediaFileAction } from '../../redux/actions/FileActions.js';
+import { 
+  selectGoogleFileAction, 
+  selectBookingFileAction, 
+  selectExpediaFileAction, 
+  unSelectGoogleFileAction, 
+  unSelectBookingFileAction, 
+  unSelectExpediaFileAction,
+  saveGoogleFileAction,
+  saveBookingFileAction,
+  saveExpediaFileAction 
+} from '../../redux/actions/FileActions.js';
+
 import { createDictAction } from '../../redux/actions/DictionaryActions.js';
 
 export class SettingsPage extends React.Component {
@@ -29,16 +40,18 @@ export class SettingsPage extends React.Component {
 
   handleGoogleFileChange = (event) => {
     event.preventDefault()
+    const { selectGoogleFileAction, unSelectGoogleFileAction } = this.props;
+    //Clean redux state for google file
+    unSelectGoogleFileAction();
+
+    //Get the file input and store it in redux
     let fileGoogle = event.target.files[0]
-    const { selectGoogleFileAction } = this.props;
     const reader = new FileReader()
     reader.onabort = () => console.log('file reading was aborted')
     reader.onerror = () => console.log('file reading has failed')
     reader.onload = () => {
       const binaryStr = reader.result
       let json = JSON.parse(binaryStr)
-      let sorted = json.Hoteles.sort(compare);
-      json.Hoteles = sorted
       selectGoogleFileAction(json)
     }
     reader.readAsText(fileGoogle)
@@ -52,11 +65,8 @@ export class SettingsPage extends React.Component {
     reader.onabort = () => console.log('file reading was aborted')
     reader.onerror = () => console.log('file reading has failed')
     reader.onload = () => {
-      // Do whatever you want with the file contents
       const binaryStr = reader.result
       let json = JSON.parse(binaryStr)
-      let sorted = json.Hoteles.sort(compare);
-      json.Hoteles = sorted
       selectBookingFileAction(json)
     }
     reader.readAsText(fileBooking)
@@ -70,11 +80,8 @@ export class SettingsPage extends React.Component {
     reader.onabort = () => console.log('file reading was aborted')
     reader.onerror = () => console.log('file reading has failed')
     reader.onload = () => {
-      // Do whatever you want with the file contents
       const binaryStr = reader.result
       let json = JSON.parse(binaryStr)
-      let sorted = json.Hoteles.sort(compare);
-      json.Hoteles = sorted
       selectExpediaFileAction(json)
     }
     reader.readAsText(fileExpedia)
@@ -103,29 +110,61 @@ export class SettingsPage extends React.Component {
   }
 
   handleSubmit = (event) => {
+    const { createDictAction, saveGoogleFileAction, saveBookingFileAction, saveExpediaFileAction } = this.props;
 
-    //guardar los archivos ordenados y filtrados en redux
-    //tomar valor de taxonomia
-    //Crear diccionario y guardarlo en redux
-    //Generar tuplas y hacer llamada a api
-    let taxonomyArray = this.constructTaxonomyArray(this.state.taxonomyItems);
-
-    const { createDictAction } = this.props;
-    let dictionary = createDictionary(this.props.fileGoogle, this.props.fileBooking, this.props.fileExpedia);
-    createDictAction(dictionary);
-
-    let googleTuples = generateTuples(this.props.fileGoogle, dictionary);
-    let bookingTuples = generateTuples(this.props.fileBooking, dictionary);
-    let expediaTuples = generateTuples(this.props.fileExpedia, dictionary);
-
-    getExtendedOrderFromApiAsync(
-      {
-        "googleTuples": googleTuples,
-        "bookingTuples": bookingTuples,
-        "expediaTuples": expediaTuples,
-        "taxonomy": taxonomyArray
+    if( (this.props.fileGoogle.Hoteles !== undefined) && (this.props.fileBooking.Hoteles !== undefined) && (this.props.fileExpedia.Hoteles !== undefined)){
+      //Get googleFile from redux, apply sort and filters
+      let sorted = this.props.fileGoogle.Hoteles.sort(compare);
+      let googleHotels = sorted.filter(hotel => hotel.reviews >= this.state.minComments);
+      let googleFileToSave= {
+        "Hoteles": googleHotels 
       }
-    );
+      //Save sorted file in redux
+      saveGoogleFileAction(googleFileToSave)
+
+
+      //Get bookingFile from redux and sort it
+      sorted = this.props.fileBooking.Hoteles.sort(compare);
+      let bookingHotels = sorted.filter(hotel => hotel.reviews >= this.state.minComments);
+      let bookingFileToSave = {
+        "Hoteles": bookingHotels 
+      }
+      //Save sorted file in redux
+      saveBookingFileAction(bookingFileToSave)
+
+
+      //Get expediaFile from redux and sort it
+      sorted = this.props.fileExpedia.Hoteles.sort(compare);
+      let expediaHotels = sorted.filter(hotel => hotel.reviews >= this.state.minComments);
+      let expediaFileToSave = {
+        "Hoteles": expediaHotels 
+      }
+      //Save sorted file in redux
+      saveExpediaFileAction(expediaFileToSave)
+
+
+      //Create taxonomy array
+      let taxonomyArray = this.constructTaxonomyArray(this.state.taxonomyItems);
+
+      //Create dictionary
+      let dictionary = createDictionary(googleFileToSave, bookingFileToSave, expediaFileToSave);
+      createDictAction(dictionary);
+
+      //Generate confiability tuples
+      let googleTuples = generateTuples(googleFileToSave, dictionary);
+      let bookingTuples = generateTuples(bookingFileToSave, dictionary);
+      let expediaTuples = generateTuples(expediaFileToSave, dictionary);
+
+      //api call
+      getExtendedOrderFromApiAsync(
+        {
+          "googleTuples": googleTuples,
+          "bookingTuples": bookingTuples,
+          "expediaTuples": expediaTuples,
+          "taxonomy": taxonomyArray
+        }
+      );
+    }
     
   }
 
@@ -153,6 +192,9 @@ SettingsPage.propTypes = {
   fileGoogle: PropTypes.object,
   fileBooking: PropTypes.object,
   fileExpedia: PropTypes.object,
+  fileGoogleSaved: PropTypes.object,
+  fileBookingSaved: PropTypes.object,
+  fileExpediaSaved: PropTypes.object,
   hotelsDict: PropTypes.object
 };
 
@@ -161,15 +203,22 @@ const mapStateToProps = (state) => {
     fileGoogle: state.fileGoogle,
     fileBooking: state.fileBooking,
     fileExpedia: state.fileExpedia,
-    hotelsDict: state.hotelsDict
+    hotelsDict: state.hotelsDict,
+    fileGoogleSaved: state.fileGoogleSaved,
+    fileBookingSaved: state.fileBookingSaved,
+    fileExpediaSaved: state.fileExpediaSaved
   };
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     selectGoogleFileAction: (fileGoogle) => {dispatch(selectGoogleFileAction(fileGoogle));},
+    saveGoogleFileAction: (fileGoogleSaved) => {dispatch(saveGoogleFileAction(fileGoogleSaved));},
     selectBookingFileAction: (fileBooking) => {dispatch(selectBookingFileAction(fileBooking));},
+    saveBookingFileAction: (fileBookingSaved) => {dispatch(saveBookingFileAction(fileBookingSaved));},
     selectExpediaFileAction: (fileExpedia) => {dispatch(selectExpediaFileAction(fileExpedia));},
+    saveExpediaFileAction: (fileExpediaSaved) => {dispatch(saveExpediaFileAction(fileExpediaSaved));},
+    unSelectGoogleFileAction: () => {dispatch(unSelectGoogleFileAction());},
     createDictAction: (hotelsDict) => {dispatch(createDictAction(hotelsDict));}
   }
 }   

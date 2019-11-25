@@ -34,21 +34,21 @@ export class HotelsPage extends React.Component {
                       tabName: "Google",
                       tabIcon: Hotel,
                       tabContent: (
-                        <HotelsList hotelsList={(this.props.fileGoogle.Hoteles)} className='textCenter'/>
+                        <HotelsList hotelsList={(this.props.fileGoogleSaved.Hoteles)} className='textCenter'/>
                       )
                     },
                     {
                       tabName: "Booking",
                       tabIcon: Hotel,
                       tabContent: (
-                        <HotelsList hotelsList={(this.props.fileBooking.Hoteles)} className='textCenter'/>
+                        <HotelsList hotelsList={(this.props.fileBookingSaved.Hoteles)} className='textCenter'/>
                       )
                     },
                     {
                       tabName: "Expedia",
                       tabIcon: Hotel,
                       tabContent: (
-                        <HotelsList hotelsList={(this.props.fileExpedia.Hoteles)} className='textCenter'/>
+                        <HotelsList hotelsList={(this.props.fileExpediaSaved.Hoteles)} className='textCenter'/>
                       )
                     },
                     {
@@ -68,16 +68,16 @@ export class HotelsPage extends React.Component {
 }
 
 HotelsPage.propTypes = {
-  fileGoogle: PropTypes.object,
-  fileBooking: PropTypes.object,
-  fileExpedia: PropTypes.object
+  fileGoogleSaved: PropTypes.object,
+  fileBookingSaved: PropTypes.object,
+  fileExpediaSaved: PropTypes.object
 };
 
 const mapStateToProps = (state) => {
   return {
-    fileGoogle: state.fileGoogle,
-    fileBooking: state.fileBooking,
-    fileExpedia: state.fileExpedia
+    fileGoogleSaved: state.fileGoogleSaved,
+    fileBookingSaved: state.fileBookingSaved,
+    fileExpediaSaved: state.fileExpediaSaved
   };
 }
 
