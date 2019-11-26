@@ -11,7 +11,6 @@ import SettingsForm from "views/SettingsPage/SettingsForm.js";
 import { compare } from "utils/fileUtils.js";
 import { createDictionary } from "utils/dictionary.js";
 import { generateTuples } from "utils/tuplesGenerator.js";
-import { getExtendedOrderFromApiAsync } from "services/connectionService.js";
 import arrayMove from 'array-move';
 
 //Actions
@@ -28,6 +27,8 @@ import {
 } from '../../redux/actions/FileActions.js';
 
 import { createDictAction } from '../../redux/actions/DictionaryActions.js';
+
+import { addTotalOrderAction, cleanTotalOrderAction  } from '../../redux/actions/TotalOrderActions.js';
 
 export class SettingsPage extends React.Component {
   constructor(props) {
@@ -156,16 +157,45 @@ export class SettingsPage extends React.Component {
       let expediaTuples = generateTuples(expediaFileToSave, dictionary);
 
       //api call
-      getExtendedOrderFromApiAsync(
+      let postData =
         {
           "googleTuples": googleTuples,
           "bookingTuples": bookingTuples,
           "expediaTuples": expediaTuples,
           "taxonomy": taxonomyArray
         }
-      );
+      
+        this.getResultAsync(postData);
     }
-    
+  }
+
+  getResultAsync = (postData) => {
+
+    const { addTotalOrderAction } = this.props;
+
+    let data = JSON.stringify(postData);
+    let request = new Request('http://localhost:8080/multicontext');
+    (async () => { 
+      await fetch(request, {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: data,
+      })
+        .then((response) => response.json())
+          .then((responseJson) => {
+            //guardar en redux el resultado
+            console.log(responseJson);
+            addTotalOrderAction(responseJson);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+
+      })();
+  
   }
 
   render() {
@@ -195,7 +225,8 @@ SettingsPage.propTypes = {
   fileGoogleSaved: PropTypes.object,
   fileBookingSaved: PropTypes.object,
   fileExpediaSaved: PropTypes.object,
-  hotelsDict: PropTypes.object
+  hotelsDict: PropTypes.object,
+  totalOrder: PropTypes.object
 };
 
 const mapStateToProps = (state) => {
@@ -206,7 +237,8 @@ const mapStateToProps = (state) => {
     hotelsDict: state.hotelsDict,
     fileGoogleSaved: state.fileGoogleSaved,
     fileBookingSaved: state.fileBookingSaved,
-    fileExpediaSaved: state.fileExpediaSaved
+    fileExpediaSaved: state.fileExpediaSaved,
+    totalOrder: state.totalOrder
   };
 }
 
@@ -219,7 +251,8 @@ const mapDispatchToProps = (dispatch) => {
     selectExpediaFileAction: (fileExpedia) => {dispatch(selectExpediaFileAction(fileExpedia));},
     saveExpediaFileAction: (fileExpediaSaved) => {dispatch(saveExpediaFileAction(fileExpediaSaved));},
     unSelectGoogleFileAction: () => {dispatch(unSelectGoogleFileAction());},
-    createDictAction: (hotelsDict) => {dispatch(createDictAction(hotelsDict));}
+    createDictAction: (hotelsDict) => {dispatch(createDictAction(hotelsDict));},
+    addTotalOrderAction: (totalOrder) => {dispatch(addTotalOrderAction(totalOrder));}
   }
 }   
 

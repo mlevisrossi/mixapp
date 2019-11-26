@@ -11,6 +11,8 @@ import Hotel from "@material-ui/icons/Hotel";
 import CustomTabs from "components/CustomTabs/CustomTabs.js";
 import ListContainer from "views/HotelsPage/ListContainer.js";
 
+import { mapToHotelNames } from "utils/dictionary.js";
+
 //css
 import 'assets/css/views/hotelsPage.css';
 
@@ -18,6 +20,15 @@ function List(props) {
   let condition = props.condition;
   if (condition){
     return <ListContainer data={(props.data)}/>;
+  }
+  return null;
+};
+
+function TotalOrderList(props) {
+  let condition = props.condition;
+  if (condition){
+    let hotels = mapToHotelNames(props.dict, props.data);
+    return <ListContainer data={(hotels)}/>;
   }
   return null;
 };
@@ -64,7 +75,7 @@ export class HotelsPage extends React.Component {
                       tabName: "Orden total",
                       tabIcon: Hotel,
                       tabContent: (
-                        <p>Aca va el resultado de multicontext</p>
+                        <TotalOrderList condition={(this.props.totalOrder.totalOrder)!== undefined} data={this.props.totalOrder.totalOrder} dict={this.props.hotelsDict} />
                       )
                     }
                   ]}
@@ -79,14 +90,18 @@ export class HotelsPage extends React.Component {
 HotelsPage.propTypes = {
   fileGoogleSaved: PropTypes.object,
   fileBookingSaved: PropTypes.object,
-  fileExpediaSaved: PropTypes.object
+  fileExpediaSaved: PropTypes.object,
+  totalOrder: PropTypes.object,
+  hotelsDict: PropTypes.object
 };
 
 const mapStateToProps = (state) => {
   return {
     fileGoogleSaved: state.fileGoogleSaved,
     fileBookingSaved: state.fileBookingSaved,
-    fileExpediaSaved: state.fileExpediaSaved
+    fileExpediaSaved: state.fileExpediaSaved,
+    totalOrder: state.totalOrder,
+    hotelsDict: state.hotelsDict
   };
 }
 

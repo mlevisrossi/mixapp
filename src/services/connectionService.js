@@ -1,4 +1,4 @@
-export function getExtendedOrderFromApiAsync(jsonData) {
+export async function getExtendedOrderFromApiAsync(jsonData) {
   let data = JSON.stringify(jsonData) 
   const request = new Request('http://localhost:8080/multicontext');
   fetch(request, {
@@ -11,7 +11,7 @@ export function getExtendedOrderFromApiAsync(jsonData) {
   })
   .then((response) => response.json())
     .then((responseJson) => {
-      return console.log(responseJson);
+      return responseJson;
     })
     .catch((error) => {
       console.error(error);

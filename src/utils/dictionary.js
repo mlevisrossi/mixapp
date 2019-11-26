@@ -27,3 +27,18 @@ const getData = (data, hotelsDict, id) => {
 
     return id;
 }
+
+const getKeyByValue = (object, value) => {
+    return Object.keys(object).find(key => object[key] === value);
+  }
+
+export const mapToHotelNames = (hotelsDict, totalOrder) => {
+    let hotelsOrder = new Array();
+    let hotelName;
+    totalOrder.forEach(function (id) {
+        hotelName = getKeyByValue(hotelsDict, id);
+        hotelsOrder.push(hotelName);
+    });
+
+    return hotelsOrder;
+}

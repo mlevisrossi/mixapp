@@ -5,7 +5,8 @@ const initialState = {
     fileBookingSaved: {},
     fileExpedia: {},
     fileExpediaSaved: {},
-    hotelsDict: {}
+    hotelsDict: {},
+    totalOrder: {}
 }
 
 export default initialState;
