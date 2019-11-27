@@ -4,10 +4,8 @@ import classNames from "classnames";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 // core components
-import Button from "components/CustomButtons/Button.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
-import NavPills from "components/NavPills/NavPills.js";
 import Parallax from "components/Parallax/Parallax.js";
 import SettingsPage from "views/SettingsPage/SettingsPage.js";
 import HotelsPage from "views/HotelsPage/HotelsPage.js";

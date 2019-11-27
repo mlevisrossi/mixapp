@@ -11,23 +11,22 @@ export default class ListContainer extends React.Component {
   
       this.state = {
         currentData: [],
-        pageLimit: 10,
         offset: 0,
         pageCount: 0
       };
     }
   
     loadHotels() {
-      const currentData = this.props.data.slice(this.state.offset, this.state.offset + this.state.pageLimit);
+      const currentData = this.props.data.slice(this.state.offset, this.state.offset + this.props.pageLimit);
       this.setState({
         currentData: currentData,
-        pageCount: Math.ceil(this.props.data.length / this.state.pageLimit),
+        pageCount: Math.ceil(this.props.data.length / this.props.pageLimit),
       });
     }
   
     handlePageClick = (data) => {
       let selected = data.selected;
-      let offset = Math.ceil(selected * this.state.pageLimit);
+      let offset = Math.ceil(selected * this.props.pageLimit);
   
       this.setState({ offset: offset }, () => {
         this.loadHotels();
@@ -41,7 +40,7 @@ export default class ListContainer extends React.Component {
     render() {
         return (
             <div>
-                <HotelsList hotelsList={(this.state.currentData)} className='textCenter'/>
+                <HotelsList hotelsList={(this.state.currentData)} className='textCenter' letter={(this.props.letter)} />
                 <ReactPaginate
                     previousLabel={'PREV'}
                     nextLabel={'NEXT'}

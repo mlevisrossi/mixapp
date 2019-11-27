@@ -1,21 +1,11 @@
 import React from "react";
-import CustomInput from "components/CustomInput/CustomInput.js";
 import GridItem from "components/Grid/GridItem.js";
-import Switch from "@material-ui/core/Switch";
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControl from '@material-ui/core/FormControl';
-import Input from "@material-ui/core/Input";
-import { Label } from "@material-ui/icons";
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from "components/CustomButtons/Button.js";
-import InputAdornment from "@material-ui/core/InputAdornment";
 import PublishIcon from '@material-ui/icons/Publish';
 import TextField from '@material-ui/core/TextField';
 import GridContainer from "components/Grid/GridContainer.js";
 import Typography from '@material-ui/core/Typography';
-import Tooltip from '@material-ui/core/Tooltip';
 import SortableComponent from "components/SortableComponent/SortableComponent.js";
-import arrayMove from 'array-move';
 
 import Slider from '@material-ui/core/Slider';
 

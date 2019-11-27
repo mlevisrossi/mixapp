@@ -1,5 +1,3 @@
-const { fromJS  } = require('immutable');
-
 export const createDictionary = (dataGoogle, dataBooking, dataExpedia) => {
     let id = 1;
 
@@ -37,7 +35,9 @@ export const mapToHotelNames = (hotelsDict, totalOrder) => {
     let hotelName;
     totalOrder.forEach(function (id) {
         hotelName = getKeyByValue(hotelsDict, id);
-        hotelsOrder.push(hotelName);
+        hotelsOrder.push({
+            "name": hotelName
+        });
     });
 
     return hotelsOrder;

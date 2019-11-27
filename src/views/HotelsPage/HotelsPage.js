@@ -2,11 +2,8 @@ import React from "react";
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 // core components
-import Button from "components/CustomButtons/Button.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
-import NavPills from "components/NavPills/NavPills.js";
-import HotelsList from "views/HotelsPage/HotelsList.js";
 import Hotel from "@material-ui/icons/Hotel";
 import CustomTabs from "components/CustomTabs/CustomTabs.js";
 import ListContainer from "views/HotelsPage/ListContainer.js";
@@ -19,7 +16,7 @@ import 'assets/css/views/hotelsPage.css';
 function List(props) {
   let condition = props.condition;
   if (condition){
-    return <ListContainer data={(props.data)}/>;
+    return <ListContainer data={(props.data)} pageLimit={10} letter={(props.letter)}/>;
   }
   return null;
 };
@@ -28,7 +25,7 @@ function TotalOrderList(props) {
   let condition = props.condition;
   if (condition){
     let hotels = mapToHotelNames(props.dict, props.data);
-    return <ListContainer data={(hotels)}/>;
+    return <ListContainer data={(hotels)} pageLimit={15} letter={(props.letter)}/>;
   }
   return null;
 };
@@ -54,28 +51,28 @@ export class HotelsPage extends React.Component {
                       tabName: "Google",
                       tabIcon: Hotel,
                       tabContent: (
-                        <List condition={(this.props.fileGoogleSaved.Hoteles)!== undefined} data={this.props.fileGoogleSaved.Hoteles} />
+                        <List condition={(this.props.fileGoogleSaved.Hoteles)!== undefined} data={this.props.fileGoogleSaved.Hoteles} letter={"G"}/>
                       )
                     },
                     {
                       tabName: "Booking",
                       tabIcon: Hotel,
                       tabContent: (
-                        <List condition={(this.props.fileBookingSaved.Hoteles)!== undefined} data={this.props.fileBookingSaved.Hoteles} />
+                        <List condition={(this.props.fileBookingSaved.Hoteles)!== undefined} data={this.props.fileBookingSaved.Hoteles} letter={"B"}/>
                       )
                     },
                     {
                       tabName: "Expedia",
                       tabIcon: Hotel,
                       tabContent: (
-                        <List condition={(this.props.fileExpediaSaved.Hoteles)!== undefined} data={this.props.fileExpediaSaved.Hoteles} />
+                        <List condition={(this.props.fileExpediaSaved.Hoteles)!== undefined} data={this.props.fileExpediaSaved.Hoteles} letter={"H"} />
                       )
                     },
                     {
                       tabName: "Orden total",
                       tabIcon: Hotel,
                       tabContent: (
-                        <TotalOrderList condition={(this.props.totalOrder.totalOrder)!== undefined} data={this.props.totalOrder.totalOrder} dict={this.props.hotelsDict} />
+                        <TotalOrderList condition={(this.props.totalOrder.totalOrder)!== undefined} data={this.props.totalOrder.totalOrder} dict={this.props.hotelsDict} letter={"H"}/>
                       )
                     }
                   ]}
