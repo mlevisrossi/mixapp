@@ -167,7 +167,7 @@ export default class SettingsForm extends React.Component {
                     <div className='title-content'>
                     <h3>
                         <br />
-                        Elegir taxonomia
+                        Orden de Preferencia
                         <br />
                     </h3>
                     </div>
