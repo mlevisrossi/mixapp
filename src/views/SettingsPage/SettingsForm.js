@@ -96,7 +96,7 @@ export default class SettingsForm extends React.Component {
                         <Button variant="contained" component="label" color="white" className='filebutton'>
                             Google 
                             <PublishIcon />
-                            <input type="file" style={{ display: "none" }} onChange={this.getUploadedGoogleFileName}/>
+                            <input type="file" accept="text/plain, application/json" style={{ display: "none" }} onChange={this.getUploadedGoogleFileName}/>
                         </Button>
                         <TextField
                             id="standard-read-only-input1"
@@ -112,7 +112,7 @@ export default class SettingsForm extends React.Component {
                         <Button variant="contained" component="label" color="white" className='filebutton' >
                             Booking 
                             <PublishIcon />
-                            <input type="file" style={{ display: "none" }} onChange={this.getUploadedBookingFileName}/>
+                            <input type="file" accept="text/plain, application/json" style={{ display: "none" }} onChange={this.getUploadedBookingFileName}/>
                         </Button>
                         <TextField
                             id="standard-read-only-input2"
@@ -129,7 +129,7 @@ export default class SettingsForm extends React.Component {
                         <Button variant="contained" component="label" color="white" className='filebutton'>
                             Expedia 
                             <PublishIcon />
-                            <input type="file" style={{ display: "none" }} onChange={this.getUploadedExpediaFileName}/>
+                            <input type="file" accept="text/plain, application/json" style={{ display: "none" }} onChange={this.getUploadedExpediaFileName}/>
                         </Button>
                         <TextField
                             id="standard-read-only-input3"

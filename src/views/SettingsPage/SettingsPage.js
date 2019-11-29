@@ -23,10 +23,13 @@ import {
   unSelectExpediaFileAction,
   saveGoogleFileAction,
   saveBookingFileAction,
-  saveExpediaFileAction 
+  saveExpediaFileAction,
+  cleanSavedGoogleFileAction,
+  cleanSavedBookingFileAction,
+  cleanSavedExpediaFileAction
 } from '../../redux/actions/FileActions.js';
 
-import { createDictAction } from '../../redux/actions/DictionaryActions.js';
+import { createDictAction, cleanDictAction } from '../../redux/actions/DictionaryActions.js';
 
 import { addTotalOrderAction, cleanTotalOrderAction  } from '../../redux/actions/TotalOrderActions.js';
 
@@ -60,8 +63,11 @@ export class SettingsPage extends React.Component {
 
   handleBookingFileChange = (event) => {
     event.preventDefault()
+    const { selectBookingFileAction, unSelectBookingFileAction } = this.props;
+    //Clean redux state for booking file
+    unSelectBookingFileAction();
+
     let fileBooking = event.target.files[0]
-    const { selectBookingFileAction } = this.props;
     const reader = new FileReader()
     reader.onabort = () => console.log('file reading was aborted')
     reader.onerror = () => console.log('file reading has failed')
@@ -75,8 +81,11 @@ export class SettingsPage extends React.Component {
 
   handleExpediaFileChange = (event) => {
     event.preventDefault()
+    const { selectExpediaFileAction, unSelectExpediaFileAction } = this.props;
+    //Clean redux state for booking file
+    unSelectExpediaFileAction();
+
     let fileExpedia = event.target.files[0]
-    const { selectExpediaFileAction } = this.props;
     const reader = new FileReader()
     reader.onabort = () => console.log('file reading was aborted')
     reader.onerror = () => console.log('file reading has failed')
@@ -110,8 +119,25 @@ export class SettingsPage extends React.Component {
     return taxonomyArray
   }
 
+  cleanBeforeSubmit = () => {
+    const { cleanSavedGoogleFileAction, cleanSavedBookingFileAction, cleanSavedExpediaFileAction, cleanDictAction, cleanTotalOrderAction  } = this.props;
+    //Clean saved files
+    cleanSavedGoogleFileAction();
+    cleanSavedBookingFileAction();
+    cleanSavedExpediaFileAction();
+
+    //Clean dictionary
+    cleanDictAction();
+
+    //Clean total order
+    cleanTotalOrderAction();
+  }
+
   handleSubmit = (event) => {
     const { createDictAction, saveGoogleFileAction, saveBookingFileAction, saveExpediaFileAction } = this.props;
+
+    //Clean the redux variables
+    this.cleanBeforeSubmit();
 
     if( (this.props.fileGoogle.Hoteles !== undefined) && (this.props.fileBooking.Hoteles !== undefined) && (this.props.fileExpedia.Hoteles !== undefined)){
       //Get googleFile from redux, apply sort and filters
@@ -251,8 +277,15 @@ const mapDispatchToProps = (dispatch) => {
     selectExpediaFileAction: (fileExpedia) => {dispatch(selectExpediaFileAction(fileExpedia));},
     saveExpediaFileAction: (fileExpediaSaved) => {dispatch(saveExpediaFileAction(fileExpediaSaved));},
     unSelectGoogleFileAction: () => {dispatch(unSelectGoogleFileAction());},
+    unSelectBookingFileAction: () => {dispatch(unSelectBookingFileAction());},
+    unSelectExpediaFileAction: () => {dispatch(unSelectExpediaFileAction());},
     createDictAction: (hotelsDict) => {dispatch(createDictAction(hotelsDict));},
-    addTotalOrderAction: (totalOrder) => {dispatch(addTotalOrderAction(totalOrder));}
+    addTotalOrderAction: (totalOrder) => {dispatch(addTotalOrderAction(totalOrder));},
+    cleanSavedGoogleFileAction: () => {dispatch(cleanSavedGoogleFileAction());},
+    cleanSavedBookingFileAction: () => {dispatch(cleanSavedBookingFileAction());},
+    cleanSavedExpediaFileAction: () => {dispatch(cleanSavedExpediaFileAction());},
+    cleanDictAction: () => {dispatch(cleanDictAction());},
+    cleanTotalOrderAction: () => {dispatch(cleanTotalOrderAction());}
   }
 }   
 

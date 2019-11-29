@@ -37,6 +37,15 @@ export default class ListContainer extends React.Component {
         this.loadHotels();
     }
 
+    componentDidUpdate(prevProps, prevState) {
+      const { data } = this.props;
+    
+      if(prevProps.data !== data) {
+        // update the state
+        this.loadHotels();
+      }
+    }
+
     render() {
         return (
             <div>

@@ -8,8 +8,7 @@ export const googleFileSavedReducer = (state = initialState.fileGoogleSaved, act
     let new_state
     switch (action.type) {
         case GOOGLEFILE_SAVED:
-            new_state = cloneDeep(state);
-            return merge(new_state, action.payload);
+            return Object.assign({}, state, action.payload );
         case GOOGLEFILE_SAVED_CLEAN :
                 return {};
         default:
