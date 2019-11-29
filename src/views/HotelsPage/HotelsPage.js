@@ -16,7 +16,7 @@ import 'assets/css/views/hotelsPage.css';
 function List(props) {
   let condition = props.condition;
   if (condition){
-    return <ListContainer data={(props.data)} pageLimit={10} letter={(props.letter)}/>;
+    return <ListContainer data={(props.data)} pageLimit={10} letter={(props.letter)} totalOrder={false}/>;
   }
   return null;
 };
@@ -24,8 +24,8 @@ function List(props) {
 function TotalOrderList(props) {
   let condition = props.condition;
   if (condition){
-    let hotels = mapToHotelNames(props.dict, props.data);
-    return <ListContainer data={(hotels)} pageLimit={15} letter={(props.letter)}/>;
+    let hotels = mapToHotelNames(props.dict, props.data, props.google, props.booking, props.trivago);
+    return <ListContainer data={(hotels)} pageLimit={15} letter={(props.letter)} totalOrder={true}/>;
   }
   return null;
 };
@@ -72,7 +72,15 @@ export class HotelsPage extends React.Component {
                       tabName: "Orden total",
                       tabIcon: Hotel,
                       tabContent: (
-                        <TotalOrderList condition={(this.props.totalOrder.totalOrder)!== undefined} data={this.props.totalOrder.totalOrder} dict={this.props.hotelsDict} letter={"H"}/>
+                        <TotalOrderList 
+                          condition={(this.props.totalOrder.totalOrder)!== undefined} 
+                          data={this.props.totalOrder.totalOrder} 
+                          dict={this.props.hotelsDict} 
+                          google={this.props.fileGoogleSaved.Hoteles}
+                          booking={this.props.fileBookingSaved.Hoteles}
+                          trivago={this.props.fileTrivagoSaved.Hoteles}
+                          letter={"H"}
+                        />
                       )
                     }
                   ]}

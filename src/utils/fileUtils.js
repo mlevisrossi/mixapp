@@ -1,5 +1,5 @@
 
-const betterThan2 = (H1, H2) => {
+const betterThan = (H1, H2) => {
     let ratingH1 = parseFloat(H1.rating);
     let ratingH2 = parseFloat(H2.rating);
 
@@ -27,7 +27,7 @@ const betterThan2 = (H1, H2) => {
     return isBetter;
 }
 
-const betterThan = (H1, H2) => {
+const betterThan2 = (H1, H2) => {
   let isBetter= false
 
   if(H1.rating!=null && H2.rating==null) {

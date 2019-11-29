@@ -49,7 +49,7 @@ export default class ListContainer extends React.Component {
     render() {
         return (
             <div>
-                <HotelsList hotelsList={(this.state.currentData)} className='textCenter' letter={(this.props.letter)} />
+                <HotelsList hotelsList={(this.state.currentData)} className='textCenter' letter={(this.props.letter)} totalOrder={(this.props.totalOrder)}/>
                 <ReactPaginate
                     previousLabel={'PREV'}
                     nextLabel={'NEXT'}

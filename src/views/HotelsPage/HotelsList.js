@@ -8,14 +8,41 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import 'assets/css/views/hotelList.css';
 
+import googleIcon from "assets/img/google-icon2.png";
+import bookingIcon from "assets/img/booking-icon2.png";
+import trivagoIcon from "assets/img/trivago-icon.jpg";
+
 //icons
 import StarIcon from '@material-ui/icons/Star';
 import CommentIcon from '@material-ui/icons/Comment';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 
 function Details(props) {
-  let condition = props.condition;
-  if (condition){
+  let totalOrder = props.totalOrder;
+  if(totalOrder){
+    return (
+      <React.Fragment>
+        <Typography
+            component="span"
+            variant="body2"
+            className='inline'
+            color="textPrimary"
+        >
+        <div>
+            <div className="mdl-card__supporting-text">
+              <CommentIcon titleAccess="Reseñas" className='reviewsIcon'/>
+              {"Total de reseñas: " + props.data.reviews} <br />
+            </div>
+            <div className="mdl-card__supporting-text">
+              <AttachMoneyIcon titleAccess="Precio" className='priceIcon'/>
+              {"Mejor precio: $" + props.data.bestPrice + " (" + props.data.bestPriceSite + ")"} <br />
+            </div>                   
+        </div>
+        </Typography>
+    </React.Fragment>
+    )
+
+  } else {
     return (
       <React.Fragment>
         <Typography
@@ -45,6 +72,25 @@ function Details(props) {
   return null;
 };
 
+function HotelTitle(props) {
+  let totalOrder = props.totalOrder;
+  let hotel = props.hotel
+  if (totalOrder){
+    return (
+      <div>
+        {hotel.name}
+        {hotel.sites.google ? <img alt="Google" src={googleIcon} className='siteAvatar' /> : null}
+        {hotel.sites.booking ? <img alt="Booking" src={bookingIcon} className='siteAvatar' /> : null}
+        {hotel.sites.trivago ? <img alt="Trivago" src={trivagoIcon} className='siteAvatar' /> : null}
+      </div>
+    )
+  } else {
+    return (
+      hotel.name
+    )
+  }
+}
+
 export default class HotelsList extends React.Component {
 
     render(){
@@ -60,9 +106,11 @@ export default class HotelsList extends React.Component {
                               <Avatar>{this.props.letter}</Avatar>
                           </ListItemAvatar>
                           <ListItemText
-                              primary={hotel.name}
+                              primary={
+                                <HotelTitle totalOrder={this.props.totalOrder} hotel={hotel}/>
+                              }
                               secondary={
-                                  <Details condition={(hotel.rating)!== undefined} data={hotel}/>
+                                  <Details totalOrder={this.props.totalOrder} data={hotel}/>
                               }
                           />
                       </ListItem>
