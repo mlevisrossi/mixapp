@@ -2,14 +2,14 @@ import { googleFileReducer } from './googleFileReducer';
 import { googleFileSavedReducer } from './googleFileSavedReducer';
 import { bookingFileReducer } from './bookingFileReducer';
 import { bookingFileSavedReducer } from './bookingFileSavedReducer';
-import { expediaFileReducer } from './expediaFileReducer';
-import { expediaFileSavedReducer } from './expediaFileSavedReducer';
+import { trivagoFileReducer } from './trivagoFileReducer';
+import { trivagoFileSavedReducer } from './trivagoFileSavedReducer';
 
 export const reducerFiles = {
     fileGoogle: googleFileReducer,
     fileBooking: bookingFileReducer,
-    fileExpedia: expediaFileReducer,
+    fileTrivago: trivagoFileReducer,
     fileGoogleSaved: googleFileSavedReducer,
     fileBookingSaved: bookingFileSavedReducer,
-    fileExpediaSaved: expediaFileSavedReducer
+    fileTrivagoSaved: trivagoFileSavedReducer
 };

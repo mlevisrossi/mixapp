@@ -4,7 +4,7 @@ public class HotelOrders {
 
 	private Tuple[] googleTuples;
 	private Tuple[] bookingTuples;
-	private Tuple[] expediaTuples;
+	private Tuple[] trivagoTuples;
 	private int[] taxonomy;
 
 	public int[] getTaxonomy() {
@@ -31,12 +31,12 @@ public class HotelOrders {
 		this.bookingTuples = bookingTuples;
 	}
 
-	public Tuple[] getExpediaTuples() {
-		return expediaTuples;
+	public Tuple[] getTrivagoTuples() {
+		return trivagoTuples;
 	}
 
-	public void setExpediaTuples(Tuple[] expediaTuples) {
-		this.expediaTuples = expediaTuples;
+	public void setTrivagoTuples(Tuple[] trivagoTuples) {
+		this.trivagoTuples = trivagoTuples;
 	}
 	 	 
 }

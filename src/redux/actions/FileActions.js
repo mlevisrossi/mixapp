@@ -1,5 +1,5 @@
   
-import { GOOGLEFILE_SELECTED, GOOGLEFILE_CLEAN, GOOGLEFILE_SAVED, GOOGLEFILE_SAVED_CLEAN, BOOKINGFILE_SELECTED, BOOKINGFILE_CLEAN, BOOKINGFILE_SAVED, BOOKINGFILE_SAVED_CLEAN, EXPEDIAFILE_SELECTED, EXPEDIAFILE_CLEAN, EXPEDIAFILE_SAVED, EXPEDIAFILE_SAVED_CLEAN } from '../constants/fileConstants'
+import { GOOGLEFILE_SELECTED, GOOGLEFILE_CLEAN, GOOGLEFILE_SAVED, GOOGLEFILE_SAVED_CLEAN, BOOKINGFILE_SELECTED, BOOKINGFILE_CLEAN, BOOKINGFILE_SAVED, BOOKINGFILE_SAVED_CLEAN, TRIVAGOFILE_SELECTED, TRIVAGOFILE_CLEAN, TRIVAGOFILE_SAVED, TRIVAGOFILE_SAVED_CLEAN } from '../constants/fileConstants'
 
 export const selectGoogleFileAction = (fileGoogle) => {
     return {
@@ -53,28 +53,28 @@ export const cleanSavedBookingFileAction = () => {
     };
 }
 
-export const selectExpediaFileAction = (fileExpedia) => {
+export const selectTrivagoFileAction = (fileTrivago) => {
     return {
-        type: EXPEDIAFILE_SELECTED,
-        payload: fileExpedia
+        type: TRIVAGOFILE_SELECTED,
+        payload: fileTrivago
     };
 }
 
-export const unSelectExpediaFileAction = () => {
+export const unSelectTrivagoFileAction = () => {
     return {
-        type: EXPEDIAFILE_CLEAN
+        type: TRIVAGOFILE_CLEAN
     };
 }
 
-export const saveExpediaFileAction = (fileExpedia) => {
+export const saveTrivagoFileAction = (fileTrivago) => {
     return {
-        type: EXPEDIAFILE_SAVED,
-        payload: fileExpedia
+        type: TRIVAGOFILE_SAVED,
+        payload: fileTrivago
     };
 }
 
-export const cleanSavedExpediaFileAction = () => {
+export const cleanSavedTrivagoFileAction = () => {
     return {
-        type: EXPEDIAFILE_SAVED_CLEAN
+        type: TRIVAGOFILE_SAVED_CLEAN
     };
 }

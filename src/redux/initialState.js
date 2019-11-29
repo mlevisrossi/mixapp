@@ -3,8 +3,8 @@ const initialState = {
     fileGoogleSaved: {},
     fileBooking: {},
     fileBookingSaved: {},
-    fileExpedia: {},
-    fileExpediaSaved: {},
+    fileTrivago: {},
+    fileTrivagoSaved: {},
     hotelsDict: {},
     totalOrder: {}
 }

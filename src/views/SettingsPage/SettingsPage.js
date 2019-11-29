@@ -17,16 +17,16 @@ import arrayMove from 'array-move';
 import { 
   selectGoogleFileAction, 
   selectBookingFileAction, 
-  selectExpediaFileAction, 
+  selectTrivagoFileAction, 
   unSelectGoogleFileAction, 
   unSelectBookingFileAction, 
-  unSelectExpediaFileAction,
+  unSelectTrivagoFileAction,
   saveGoogleFileAction,
   saveBookingFileAction,
-  saveExpediaFileAction,
+  saveTrivagoFileAction,
   cleanSavedGoogleFileAction,
   cleanSavedBookingFileAction,
-  cleanSavedExpediaFileAction
+  cleanSavedTrivagoFileAction
 } from '../../redux/actions/FileActions.js';
 
 import { createDictAction, cleanDictAction } from '../../redux/actions/DictionaryActions.js';
@@ -37,7 +37,7 @@ export class SettingsPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      taxonomyItems: ['Google', 'Booking', 'Expedia'],
+      taxonomyItems: ['Google', 'Booking', 'Trivago'],
       minComments: 0
     }
   }
@@ -79,22 +79,22 @@ export class SettingsPage extends React.Component {
     reader.readAsText(fileBooking)
   }
 
-  handleExpediaFileChange = (event) => {
+  handleTrivagoFileChange = (event) => {
     event.preventDefault()
-    const { selectExpediaFileAction, unSelectExpediaFileAction } = this.props;
+    const { selectTrivagoFileAction, unSelectTrivagoFileAction } = this.props;
     //Clean redux state for booking file
-    unSelectExpediaFileAction();
+    unSelectTrivagoFileAction();
 
-    let fileExpedia = event.target.files[0]
+    let fileTrivago = event.target.files[0]
     const reader = new FileReader()
     reader.onabort = () => console.log('file reading was aborted')
     reader.onerror = () => console.log('file reading has failed')
     reader.onload = () => {
       const binaryStr = reader.result
       let json = JSON.parse(binaryStr)
-      selectExpediaFileAction(json)
+      selectTrivagoFileAction(json)
     }
-    reader.readAsText(fileExpedia)
+    reader.readAsText(fileTrivago)
   }
 
   onSortEnd = ({oldIndex, newIndex}) => {
@@ -113,18 +113,18 @@ export class SettingsPage extends React.Component {
     taxonomyArray.push(googleIndex + 1);
     let bookingIndex = taxonomyItems.indexOf('Booking');
     taxonomyArray.push(bookingIndex + 1);
-    let expediaIndex = taxonomyItems.indexOf('Expedia');
-    taxonomyArray.push(expediaIndex + 1);
+    let trivagoIndex = taxonomyItems.indexOf('Trivago');
+    taxonomyArray.push(trivagoIndex + 1);
 
     return taxonomyArray
   }
 
   cleanBeforeSubmit = () => {
-    const { cleanSavedGoogleFileAction, cleanSavedBookingFileAction, cleanSavedExpediaFileAction, cleanDictAction, cleanTotalOrderAction  } = this.props;
+    const { cleanSavedGoogleFileAction, cleanSavedBookingFileAction, cleanSavedTrivagoFileAction, cleanDictAction, cleanTotalOrderAction  } = this.props;
     //Clean saved files
     cleanSavedGoogleFileAction();
     cleanSavedBookingFileAction();
-    cleanSavedExpediaFileAction();
+    cleanSavedTrivagoFileAction();
 
     //Clean dictionary
     cleanDictAction();
@@ -134,12 +134,12 @@ export class SettingsPage extends React.Component {
   }
 
   handleSubmit = (event) => {
-    const { createDictAction, saveGoogleFileAction, saveBookingFileAction, saveExpediaFileAction } = this.props;
+    const { createDictAction, saveGoogleFileAction, saveBookingFileAction, saveTrivagoFileAction } = this.props;
 
     //Clean the redux variables
     this.cleanBeforeSubmit();
 
-    if( (this.props.fileGoogle.Hoteles !== undefined) && (this.props.fileBooking.Hoteles !== undefined) && (this.props.fileExpedia.Hoteles !== undefined)){
+    if( (this.props.fileGoogle.Hoteles !== undefined) && (this.props.fileBooking.Hoteles !== undefined) && (this.props.fileTrivago.Hoteles !== undefined)){
       //Get googleFile from redux, apply sort and filters
       let sorted = this.props.fileGoogle.Hoteles.sort(compare);
       let googleHotels = sorted.filter(hotel => hotel.reviews >= this.state.minComments);
@@ -160,34 +160,34 @@ export class SettingsPage extends React.Component {
       saveBookingFileAction(bookingFileToSave)
 
 
-      //Get expediaFile from redux and sort it
-      sorted = this.props.fileExpedia.Hoteles.sort(compare);
-      let expediaHotels = sorted.filter(hotel => hotel.reviews >= this.state.minComments);
-      let expediaFileToSave = {
-        "Hoteles": expediaHotels 
+      //Get trivagoFile from redux and sort it
+      sorted = this.props.fileTrivago.Hoteles.sort(compare);
+      let trivagoHotels = sorted.filter(hotel => hotel.reviews >= this.state.minComments);
+      let trivagoFileToSave = {
+        "Hoteles": trivagoHotels 
       }
       //Save sorted file in redux
-      saveExpediaFileAction(expediaFileToSave)
+      saveTrivagoFileAction(trivagoFileToSave)
 
 
       //Create taxonomy array
       let taxonomyArray = this.constructTaxonomyArray(this.state.taxonomyItems);
 
       //Create dictionary
-      let dictionary = createDictionary(googleFileToSave, bookingFileToSave, expediaFileToSave);
+      let dictionary = createDictionary(googleFileToSave, bookingFileToSave, trivagoFileToSave);
       createDictAction(dictionary);
 
       //Generate confiability tuples
       let googleTuples = generateTuples(googleFileToSave, dictionary);
       let bookingTuples = generateTuples(bookingFileToSave, dictionary);
-      let expediaTuples = generateTuples(expediaFileToSave, dictionary);
+      let trivagoTuples = generateTuples(trivagoFileToSave, dictionary);
 
       //api call
       let postData =
         {
           "googleTuples": googleTuples,
           "bookingTuples": bookingTuples,
-          "expediaTuples": expediaTuples,
+          "trivagoTuples": trivagoTuples,
           "taxonomy": taxonomyArray
         }
       
@@ -231,7 +231,7 @@ export class SettingsPage extends React.Component {
             <SettingsForm 
               handleGoogleFileChange={this.handleGoogleFileChange} 
               handleBookingFileChange={this.handleBookingFileChange} 
-              handleExpediaFileChange={this.handleExpediaFileChange} 
+              handleTrivagoFileChange={this.handleTrivagoFileChange} 
               handleSubmit={this.handleSubmit}
               taxonomyItems={this.state.taxonomyItems}
               onSortEnd={this.onSortEnd}
@@ -247,10 +247,10 @@ export class SettingsPage extends React.Component {
 SettingsPage.propTypes = {
   fileGoogle: PropTypes.object,
   fileBooking: PropTypes.object,
-  fileExpedia: PropTypes.object,
+  fileTrivago: PropTypes.object,
   fileGoogleSaved: PropTypes.object,
   fileBookingSaved: PropTypes.object,
-  fileExpediaSaved: PropTypes.object,
+  fileTrivagoSaved: PropTypes.object,
   hotelsDict: PropTypes.object,
   totalOrder: PropTypes.object
 };
@@ -259,11 +259,11 @@ const mapStateToProps = (state) => {
   return {
     fileGoogle: state.fileGoogle,
     fileBooking: state.fileBooking,
-    fileExpedia: state.fileExpedia,
+    fileTrivago: state.fileTrivago,
     hotelsDict: state.hotelsDict,
     fileGoogleSaved: state.fileGoogleSaved,
     fileBookingSaved: state.fileBookingSaved,
-    fileExpediaSaved: state.fileExpediaSaved,
+    fileTrivagoSaved: state.fileTrivagoSaved,
     totalOrder: state.totalOrder
   };
 }
@@ -274,16 +274,16 @@ const mapDispatchToProps = (dispatch) => {
     saveGoogleFileAction: (fileGoogleSaved) => {dispatch(saveGoogleFileAction(fileGoogleSaved));},
     selectBookingFileAction: (fileBooking) => {dispatch(selectBookingFileAction(fileBooking));},
     saveBookingFileAction: (fileBookingSaved) => {dispatch(saveBookingFileAction(fileBookingSaved));},
-    selectExpediaFileAction: (fileExpedia) => {dispatch(selectExpediaFileAction(fileExpedia));},
-    saveExpediaFileAction: (fileExpediaSaved) => {dispatch(saveExpediaFileAction(fileExpediaSaved));},
+    selectTrivagoFileAction: (fileTrivago) => {dispatch(selectTrivagoFileAction(fileTrivago));},
+    saveTrivagoFileAction: (fileTrivagoSaved) => {dispatch(saveTrivagoFileAction(fileTrivagoSaved));},
     unSelectGoogleFileAction: () => {dispatch(unSelectGoogleFileAction());},
     unSelectBookingFileAction: () => {dispatch(unSelectBookingFileAction());},
-    unSelectExpediaFileAction: () => {dispatch(unSelectExpediaFileAction());},
+    unSelectTrivagoFileAction: () => {dispatch(unSelectTrivagoFileAction());},
     createDictAction: (hotelsDict) => {dispatch(createDictAction(hotelsDict));},
     addTotalOrderAction: (totalOrder) => {dispatch(addTotalOrderAction(totalOrder));},
     cleanSavedGoogleFileAction: () => {dispatch(cleanSavedGoogleFileAction());},
     cleanSavedBookingFileAction: () => {dispatch(cleanSavedBookingFileAction());},
-    cleanSavedExpediaFileAction: () => {dispatch(cleanSavedExpediaFileAction());},
+    cleanSavedTrivagoFileAction: () => {dispatch(cleanSavedTrivagoFileAction());},
     cleanDictAction: () => {dispatch(cleanDictAction());},
     cleanTotalOrderAction: () => {dispatch(cleanTotalOrderAction());}
   }

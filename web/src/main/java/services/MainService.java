@@ -81,8 +81,8 @@ public class MainService {
 		}
 		
 		// Creating credibility order of Context 3 (Expedia).
-		Tuple[] expediaTuples = HO.getExpediaTuples();
-		for(Tuple t : expediaTuples) { 
+		Tuple[] trivagoTuples = HO.getTrivagoTuples();
+		for(Tuple t : trivagoTuples) { 
 			context = ContextFactory.getContext(3); // Si lista es Booking, será 1; de lo contrario, será el número de contexto que representa al sitio web.
 			ag1 = AgentFactory.getAgent(t.getH1()); 
 			ag2 = AgentFactory.getAgent(t.getH2());

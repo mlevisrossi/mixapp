@@ -17,7 +17,7 @@ export default class SettingsForm extends React.Component {
         this.state = {
             textFileGoogle:'Ningun archivo seleccionado',
             textFileBooking:'Ningun archivo seleccionado',
-            textFileExpedia:'Ningun archivo seleccionado'
+            textFileTrivago:'Ningun archivo seleccionado'
         };
     }
 
@@ -54,21 +54,21 @@ export default class SettingsForm extends React.Component {
         handleBookingFileChange(e);
      }
 
-     getUploadedExpediaFileName = (e) => {
-        const { handleExpediaFileChange } = this.props;
+     getUploadedTrivagoFileName = (e) => {
+        const { handleTrivagoFileChange } = this.props;
         
         let files = e.target.files,
             value = e.target.value,
-            textFileExpedia;
+            textFileTrivago;
         if( files && files.length > 1 ) 
-            textFileExpedia = `${files.length} files selected`;
+            textFileTrivago = `${files.length} files selected`;
         else                            
-            textFileExpedia = value.split( '\\' ).pop();
+            textFileTrivago = value.split( '\\' ).pop();
      
-        if(textFileExpedia) 
-            this.setState({...this.state,textFileExpedia});
+        if(textFileTrivago) 
+            this.setState({...this.state,textFileTrivago});
 
-        handleExpediaFileChange(e);
+        handleTrivagoFileChange(e);
      }
 
     
@@ -127,13 +127,13 @@ export default class SettingsForm extends React.Component {
 
                     <div>
                         <Button variant="contained" component="label" color="white" className='filebutton'>
-                            Expedia 
+                            Trivago 
                             <PublishIcon />
-                            <input type="file" accept="text/plain, application/json" style={{ display: "none" }} onChange={this.getUploadedExpediaFileName}/>
+                            <input type="file" accept="text/plain, application/json" style={{ display: "none" }} onChange={this.getUploadedTrivagoFileName}/>
                         </Button>
                         <TextField
                             id="standard-read-only-input3"
-                            value= {this.state.textFileExpedia}
+                            value= {this.state.textFileTrivago}
                             margin="normal"
                             InputProps={{
                                 readOnly: true,

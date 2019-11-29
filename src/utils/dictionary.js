@@ -1,4 +1,4 @@
-export const createDictionary = (dataGoogle, dataBooking, dataExpedia) => {
+export const createDictionary = (dataGoogle, dataBooking, dataTrivago) => {
     let id = 1;
 
     // Dictionary to store pairs key-value for hotels
@@ -8,7 +8,7 @@ export const createDictionary = (dataGoogle, dataBooking, dataExpedia) => {
     // Insert pairs in the dictionary from the hotel files
     id = getData(dataGoogle, hotelsDict, id);
     id = getData(dataBooking, hotelsDict, id);
-    id = getData(dataExpedia, hotelsDict, id);
+    id = getData(dataTrivago, hotelsDict, id);
 
     return hotelsDict;
 }
