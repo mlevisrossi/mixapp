@@ -45,7 +45,7 @@ export const mapToHotelNames = (hotelsDict, totalOrder, google, booking, trivago
         let hotelInGoogle = google.find(hotel => hotel.name === hotelName);
         if(hotelInGoogle!= undefined){
             totalReviews += parseInt(hotelInGoogle.reviews);
-            if (parseFloat(hotelInGoogle.price) < bestPrice){
+            if (hotelInGoogle.price!= null && parseFloat(hotelInGoogle.price) < bestPrice){
                 bestPrice = parseFloat(hotelInGoogle.price);
                 bestPriceSite = "Google";
             }
@@ -55,7 +55,7 @@ export const mapToHotelNames = (hotelsDict, totalOrder, google, booking, trivago
         let hotelInBooking = booking.find(hotel => hotel.name === hotelName);
         if(hotelInBooking!= undefined){
             totalReviews += parseInt(hotelInBooking.reviews);
-            if (parseFloat(hotelInBooking.price)< bestPrice){
+            if (hotelInBooking.price!= null && parseFloat(hotelInBooking.price)< bestPrice){
                 bestPrice = parseFloat(hotelInBooking.price);
                 bestPriceSite = "Booking";
             }
@@ -65,10 +65,14 @@ export const mapToHotelNames = (hotelsDict, totalOrder, google, booking, trivago
         let hotelInTrivago = trivago.find(hotel => hotel.name === hotelName);
         if(hotelInTrivago!= undefined){
             totalReviews += parseInt(hotelInTrivago.reviews);
-            if (parseFloat(hotelInTrivago.price)< bestPrice){
+            if (hotelInTrivago.price!= null && parseFloat(hotelInTrivago.price)< bestPrice){
                 bestPrice = parseFloat(hotelInTrivago.price);
                 bestPriceSite = "Trivago";
             }
+        }
+
+        if(bestPrice == Number.MAX_SAFE_INTEGER){
+            bestPrice = null;
         }
         
         //Add the hotel with the data to total order

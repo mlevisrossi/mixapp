@@ -16,6 +16,7 @@ import trivagoIcon from "assets/img/trivago-icon.jpg";
 import StarIcon from '@material-ui/icons/Star';
 import CommentIcon from '@material-ui/icons/Comment';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 
 function Details(props) {
   let totalOrder = props.totalOrder;
@@ -34,8 +35,9 @@ function Details(props) {
               {"Total de reseñas: " + props.data.reviews} <br />
             </div>
             <div className="mdl-card__supporting-text">
-              <AttachMoneyIcon titleAccess="Precio" className='priceIcon'/>
-              {"Mejor precio: $" + props.data.bestPrice + " (" + props.data.bestPriceSite + ")"} <br />
+              <MonetizationOnIcon titleAccess="Precio" className='priceIcon'/>
+              {props.data.bestPrice == null ? " Mejor precio no disponible" : ("Mejor precio: $" + props.data.bestPrice + " (" + props.data.bestPriceSite + ")")}
+              <br />
             </div>                   
         </div>
         </Typography>
