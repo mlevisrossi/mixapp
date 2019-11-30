@@ -133,6 +133,17 @@ export class SettingsPage extends React.Component {
     cleanTotalOrderAction();
   }
 
+  handleNulls = (hotelsList) => {
+    hotelsList.map((hotel, i) => {
+      if(hotel.rating == "null"){
+        hotel.rating = 0;
+      }
+      if(hotel.reviews == "null"){
+        hotel.reviews = 0;
+      }
+    });
+  }
+ 
   handleSubmit = (event) => {
     const { createDictAction, saveGoogleFileAction, saveBookingFileAction, saveTrivagoFileAction } = this.props;
 
@@ -141,6 +152,11 @@ export class SettingsPage extends React.Component {
 
     if( (this.props.fileGoogle.Hoteles !== undefined) && (this.props.fileBooking.Hoteles !== undefined) && (this.props.fileTrivago.Hoteles !== undefined)){
       //Get googleFile from redux, apply sort and filters
+
+      //Handle null values
+      this.handleNulls(this.props.fileGoogle.Hoteles);
+
+      //Sort and filter hotels with min reviews
       let sorted = this.props.fileGoogle.Hoteles.sort(compare);
       let googleHotels = sorted.filter(hotel => hotel.reviews >= this.state.minComments);
       let googleFileToSave= {
@@ -149,8 +165,12 @@ export class SettingsPage extends React.Component {
       //Save sorted file in redux
       saveGoogleFileAction(googleFileToSave)
 
+      //Get bookingFile from redux, apply sort and filters
 
-      //Get bookingFile from redux and sort it
+      //Handle null values
+      this.handleNulls(this.props.fileBooking.Hoteles);
+      
+      //Sort and filter hotels with min reviews
       sorted = this.props.fileBooking.Hoteles.sort(compare);
       let bookingHotels = sorted.filter(hotel => hotel.reviews >= this.state.minComments);
       let bookingFileToSave = {
@@ -160,7 +180,12 @@ export class SettingsPage extends React.Component {
       saveBookingFileAction(bookingFileToSave)
 
 
-      //Get trivagoFile from redux and sort it
+      //Get trivagoFile from redux, apply sort and filters
+
+      //Handle null values
+      this.handleNulls(this.props.fileTrivago.Hoteles);
+
+      //Sort and filter hotels with min reviews
       sorted = this.props.fileTrivago.Hoteles.sort(compare);
       let trivagoHotels = sorted.filter(hotel => hotel.reviews >= this.state.minComments);
       let trivagoFileToSave = {

@@ -61,8 +61,8 @@ function Details(props) {
                 {" " + props.data.reviews} <br />
             </div>
             <div className="mdl-card__supporting-text">
-                <AttachMoneyIcon titleAccess="Precio" className='priceIcon'/>
-                {" " + props.data.price}
+              {props.data.price != "null" ? <AttachMoneyIcon titleAccess="Precio" className='priceIcon'/> : null}
+              {props.data.price == "null" ? " Precio no disponible" : (" " + props.data.price)}
             </div>                    
         </div>
         </Typography>
