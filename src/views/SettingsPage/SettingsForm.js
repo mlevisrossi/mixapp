@@ -159,7 +159,7 @@ export default class SettingsForm extends React.Component {
 
                 </GridItem>
 
-                <GridItem xs={4}>
+                <GridItem xs={3}>
 
                     <div className='settings-title'>
                         <h2>   </h2>

@@ -31,7 +31,7 @@ export default class SortableComponent extends Component {
 
   render() {
     return (
-      <SortableContainer onSortEnd={this.props.onSortEnd}>
+      <SortableContainer onSortEnd={this.props.onSortEnd} transitionDuration={300} helperClass='sortableHelper' lockAxis="y" >
         {this.props.items.map((value, index) => (
           <SortableItem key={`item-${value}`} index={index} value={value} />
         ))}

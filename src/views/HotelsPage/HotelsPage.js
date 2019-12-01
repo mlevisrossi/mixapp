@@ -7,8 +7,11 @@ import GridItem from "components/Grid/GridItem.js";
 import Hotel from "@material-ui/icons/Hotel";
 import CustomTabs from "components/CustomTabs/CustomTabs.js";
 import ListContainer from "views/HotelsPage/ListContainer.js";
+import SvgIcon from '@material-ui/core/SvgIcon';
 
 import { mapToHotelNames } from "utils/dictionary.js";
+
+import googleIcon from "assets/img/google-icon.png";
 
 //css
 import 'assets/css/views/hotelsPage.css';
