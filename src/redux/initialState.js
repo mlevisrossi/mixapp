@@ -6,7 +6,8 @@ const initialState = {
     fileTrivago: {},
     fileTrivagoSaved: {},
     hotelsDict: {},
-    totalOrder: {}
+    totalOrder: {},
+    maxReviews: {}
 }
 
 export default initialState;

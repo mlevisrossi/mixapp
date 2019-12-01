@@ -47,3 +47,22 @@ export const compare = (a, b) => {
     }
   }
 }
+
+export const findMaxReviews = (hotelsList, maxReviews) => {
+  let hotelReviews;
+  let newMax;
+  if(JSON.stringify(maxReviews) === '{}'){
+    newMax = 0;
+  } else {
+    newMax = maxReviews.max;
+  }
+
+  hotelsList.forEach(function (hotel) {
+    hotelReviews = hotel.reviews;
+    if(hotelReviews!="null" && parseInt(hotelReviews) > newMax){
+      newMax = parseInt(hotelReviews);
+    }
+  });
+
+  return newMax;
+}

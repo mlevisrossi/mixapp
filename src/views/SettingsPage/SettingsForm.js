@@ -152,7 +152,7 @@ export default class SettingsForm extends React.Component {
                             aria-labelledby="labelSlider"
                             valueLabelDisplay="auto"
                             min={0}
-                            max={1000}
+                            max={this.props.sliderMax}
                             className='slider'
                         />
                     </div>

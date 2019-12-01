@@ -8,7 +8,7 @@ import 'assets/css/views/settingsPage.css';
 // core components
 import SettingsForm from "views/SettingsPage/SettingsForm.js";
 
-import { compare } from "utils/fileUtils.js";
+import { compare, findMaxReviews } from "utils/fileUtils.js";
 import { createDictionary } from "utils/dictionary.js";
 import { generateTuples } from "utils/tuplesGenerator.js";
 import arrayMove from 'array-move';
@@ -28,10 +28,9 @@ import {
   cleanSavedBookingFileAction,
   cleanSavedTrivagoFileAction
 } from '../../redux/actions/FileActions.js';
-
 import { createDictAction, cleanDictAction } from '../../redux/actions/DictionaryActions.js';
-
 import { addTotalOrderAction, cleanTotalOrderAction  } from '../../redux/actions/TotalOrderActions.js';
+import { setMaxReviewsAction, cleanMaxReviewsAction  } from '../../redux/actions/MaxReviewsActions.js';
 
 export class SettingsPage extends React.Component {
   constructor(props) {
@@ -39,6 +38,15 @@ export class SettingsPage extends React.Component {
     this.state = {
       taxonomyItems: ['Google', 'Booking', 'Trivago'],
       minComments: 0
+    }
+  }
+
+  setMaxReviews = (hotelsList) => {
+    const { setMaxReviewsAction, cleanMaxReviewsAction } = this.props;
+    let newMax = findMaxReviews(hotelsList, this.props.maxReviews);
+    if(newMax != this.props.maxReviews){
+      cleanMaxReviewsAction();
+      setMaxReviewsAction(newMax);
     }
   }
 
@@ -57,6 +65,7 @@ export class SettingsPage extends React.Component {
       const binaryStr = reader.result
       let json = JSON.parse(binaryStr)
       selectGoogleFileAction(json)
+      this.setMaxReviews(json.Hoteles)
     }
     reader.readAsText(fileGoogle)
   }
@@ -75,6 +84,7 @@ export class SettingsPage extends React.Component {
       const binaryStr = reader.result
       let json = JSON.parse(binaryStr)
       selectBookingFileAction(json)
+      this.setMaxReviews(json.Hoteles)
     }
     reader.readAsText(fileBooking)
   }
@@ -93,6 +103,7 @@ export class SettingsPage extends React.Component {
       const binaryStr = reader.result
       let json = JSON.parse(binaryStr)
       selectTrivagoFileAction(json)
+      this.setMaxReviews(json.Hoteles)
     }
     reader.readAsText(fileTrivago)
   }
@@ -262,6 +273,7 @@ export class SettingsPage extends React.Component {
               onSortEnd={this.onSortEnd}
               handleSliderChange={this.handleSliderChange}
               sliderValue = {this.state.minComments}
+              sliderMax = {this.props.maxReviews.max}
             />
           </div>
         </div>
@@ -277,7 +289,8 @@ SettingsPage.propTypes = {
   fileBookingSaved: PropTypes.object,
   fileTrivagoSaved: PropTypes.object,
   hotelsDict: PropTypes.object,
-  totalOrder: PropTypes.object
+  totalOrder: PropTypes.object,
+  maxReviews: PropTypes.object
 };
 
 const mapStateToProps = (state) => {
@@ -289,7 +302,8 @@ const mapStateToProps = (state) => {
     fileGoogleSaved: state.fileGoogleSaved,
     fileBookingSaved: state.fileBookingSaved,
     fileTrivagoSaved: state.fileTrivagoSaved,
-    totalOrder: state.totalOrder
+    totalOrder: state.totalOrder,
+    maxReviews: state.maxReviews
   };
 }
 
@@ -310,7 +324,9 @@ const mapDispatchToProps = (dispatch) => {
     cleanSavedBookingFileAction: () => {dispatch(cleanSavedBookingFileAction());},
     cleanSavedTrivagoFileAction: () => {dispatch(cleanSavedTrivagoFileAction());},
     cleanDictAction: () => {dispatch(cleanDictAction());},
-    cleanTotalOrderAction: () => {dispatch(cleanTotalOrderAction());}
+    cleanTotalOrderAction: () => {dispatch(cleanTotalOrderAction());},
+    setMaxReviewsAction: (maxReviews) => {dispatch(setMaxReviewsAction(maxReviews));},
+    cleanMaxReviewsAction: () => {dispatch(cleanMaxReviewsAction());}
   }
 }   
 
