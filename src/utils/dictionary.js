@@ -32,9 +32,10 @@ const getKeyByValue = (object, value) => {
 
 export const mapToHotelNames = (hotelsDict, totalOrder, google, booking, trivago) => {
     let hotelsOrder = new Array();
-    let hotelName;
-    totalOrder.forEach(function (id) {
+    let hotelName, id;
+    totalOrder.forEach(function (elem) {
         //Get the hotel name from the dictionary
+        id = elem.id
         hotelName = getKeyByValue(hotelsDict, id);
 
         let totalReviews = 0;
@@ -78,6 +79,7 @@ export const mapToHotelNames = (hotelsDict, totalOrder, google, booking, trivago
         //Add the hotel with the data to total order
         hotelsOrder.push({
             "name": hotelName,
+            "pos": elem.pos,
             "reviews": totalReviews,
             "bestPrice": bestPrice,
             "bestPriceSite": bestPriceSite,

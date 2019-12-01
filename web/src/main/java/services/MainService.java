@@ -2,6 +2,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.Iterator;
 
 import org.jgrapht.graph.DefaultDirectedGraph;
@@ -24,13 +25,14 @@ import Sets.Credibility_base;
 import Sets.Credibility_order;
 import Sets.Taxonomy;
 import entities.HotelOrders;
+import entities.TotalOrderElem;
 import entities.Tuple;
 
 
 @Service
 public class MainService {
 	
-	public List<Integer> getExtendedOrder(HotelOrders HO) {
+	public List<TotalOrderElem> getExtendedOrder(HotelOrders HO) {
 		
 		// CredibilityElement(Agent_1, Agent_2) --> ( Agent_1 < Agent_2 )
 		// TaxonomyElement(Context_1, Context_2) --> Context_1 is the father of Context_2 in the taxonomy.
@@ -103,15 +105,15 @@ public class MainService {
 			partialOrder.add(newTuple);
 		}	
 		
-		List<Integer> totalOrder = constructTotalOrder(partialOrder);
+		List<TotalOrderElem> totalOrder = constructTotalOrder(partialOrder);
 		return totalOrder;
 		
 	}
 	
-	public List<Integer> constructTotalOrder(List<Tuple> partialOrder){
+	public List<TotalOrderElem> constructTotalOrder(List<Tuple> partialOrder){
 		List<Integer> totalOrder = new ArrayList<>();
 		
-		//Directed graph that representes the partial order
+		//Directed graph that represents the partial order
 		DefaultDirectedGraph<Integer, DefaultEdge> directedGraph  = new DefaultDirectedGraph<>(DefaultEdge.class);
 		
 		//Add vertices and edges to the graph
@@ -124,7 +126,7 @@ public class MainService {
 			directedGraph.addEdge(h2, h1);
 		}
 		
-		//get a total order from the partial order, using the tipological order sort
+		//get a total order from the partial order, using the topological order sort
 		int i;
 		Iterator<Integer> iterator = new TopologicalOrderIterator<Integer, DefaultEdge>(directedGraph);
 		while (iterator.hasNext()) {
@@ -132,7 +134,61 @@ public class MainService {
             totalOrder.add(i);
         }
 		
-		return totalOrder;
+		//From the total order and the graph, get the pos of each element in the partial order
+		List<TotalOrderElem> totalOrderWithPos = new ArrayList<>();
+		int pos;
+		for(int elem: totalOrder) {
+			pos = getPos(directedGraph, elem);
+			totalOrderWithPos.add(new TotalOrderElem(elem, pos));
+		}
+		
+		return totalOrderWithPos;
+	}
+	
+	private int getLevel(DefaultDirectedGraph<Integer, DefaultEdge> directedGraph, int elem) {
+		int level = 1, parent;
+		int i = elem;
+		DefaultEdge edge;
+		Set<DefaultEdge> incomingEdges;
+		Iterator<DefaultEdge> iteratorIncoming;
+		
+		//Transverse the graph from the element to the source vertice
+		while (!directedGraph.incomingEdgesOf(i).isEmpty()){	//while i has a parent
+			incomingEdges = directedGraph.incomingEdgesOf(i);
+			iteratorIncoming = incomingEdges.iterator();
+			edge = iteratorIncoming.next();		//every elem has only one parent
+			parent = directedGraph.getEdgeSource(edge);
+			level += 1;
+			i = parent;
+        }
+		return level;
+	}
+	
+	private int getPos(DefaultDirectedGraph<Integer, DefaultEdge> directedGraph, int elem) {
+		DefaultEdge edgeToElem;
+		Set<DefaultEdge> incomingEdges;
+		Iterator<DefaultEdge> iteratorIncoming;
+		int parent, parentPos;
+		int pos= 0;
+		
+		//if elem has no parent, pos is 1
+		if(directedGraph.incomingEdgesOf(elem).isEmpty()) {
+			return 1;
+		} else {	//elem has one parent or more
+			incomingEdges = directedGraph.incomingEdgesOf(elem);
+			iteratorIncoming = incomingEdges.iterator();
+			while (iteratorIncoming.hasNext()) {
+	            edgeToElem = iteratorIncoming.next();
+	            parent = directedGraph.getEdgeSource(edgeToElem);
+	            parentPos = getPos(directedGraph, parent);
+	            if(parentPos > pos) {
+	            	pos = parentPos;
+	            }
+	        }
+			
+			return pos + 1;
+		}
+		
 	}
 	
 }

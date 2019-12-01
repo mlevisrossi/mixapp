@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import entities.ExtendedOrderResult;
 import entities.HotelOrders;
+import entities.TotalOrderElem;
 import services.MainService;
 
 @RestController
@@ -25,7 +26,7 @@ public class AppController {
 	)
     public ExtendedOrderResult extendedOrder(@RequestBody HotelOrders data) {
 		
-		List<Integer> totalOrder = service.getExtendedOrder(data);
+		List<TotalOrderElem> totalOrder = service.getExtendedOrder(data);
 		return new ExtendedOrderResult(totalOrder);
     }
 	

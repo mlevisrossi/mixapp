@@ -4,18 +4,18 @@ import java.util.List;
 
 public class ExtendedOrderResult {
 
-	private List<Integer> order;
+	private List<TotalOrderElem> order;
 
-	public ExtendedOrderResult(List<Integer> order) {
+	public ExtendedOrderResult(List<TotalOrderElem> order) {
 		super();
 		this.order = order;
 	}
 
-	public List<Integer> getTotalOrder() {
+	public List<TotalOrderElem> getTotalOrder() {
 		return order;
 	}
 
-	public void setTotalOrder(List<Integer> order) {
+	public void setTotalOrder(List<TotalOrderElem> order) {
 		this.order = order;
 	}
 }
