@@ -48,7 +48,7 @@ export class HotelsPage extends React.Component {
                   <br />
                 </div>
                 <CustomTabs
-                  headerColor="info"
+                  headerColor= 'primary'
                   tabs={[
                     {
                       tabName: "Google",
@@ -82,7 +82,6 @@ export class HotelsPage extends React.Component {
                           google={this.props.fileGoogleSaved.Hoteles}
                           booking={this.props.fileBookingSaved.Hoteles}
                           trivago={this.props.fileTrivagoSaved.Hoteles}
-                          letter={"H"}
                         />
                       )
                     }

@@ -105,7 +105,7 @@ export default class HotelsList extends React.Component {
                   <div> 
                       <ListItem alignItems="flex-start">
                           <ListItemAvatar>
-                              <Avatar>
+                              <Avatar className='itemAvatar'>
                                 {this.props.totalOrder ? hotel.pos : this.props.letter}
                               </Avatar>
                           </ListItemAvatar>

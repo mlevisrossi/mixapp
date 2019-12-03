@@ -8,6 +8,9 @@ import 'assets/css/views/settingsPage.css';
 // core components
 import SettingsForm from "views/SettingsPage/SettingsForm.js";
 
+import GridContainer from "components/Grid/GridContainer.js";
+import GridItem from "components/Grid/GridItem.js";
+
 import { compare, findMaxReviews } from "utils/fileUtils.js";
 import { createDictionary } from "utils/dictionary.js";
 import { generateTuples } from "utils/tuplesGenerator.js";
@@ -260,22 +263,48 @@ export class SettingsPage extends React.Component {
   
   }
 
+  handleClean = (event) => {
+    const { unSelectGoogleFileAction, unSelectBookingFileAction, unSelectTrivagoFileAction, cleanMaxReviewsAction } = this.props;
+
+    //clean selected files
+    unSelectGoogleFileAction();
+    unSelectBookingFileAction();
+    unSelectTrivagoFileAction();
+
+    //clean max reviews
+    cleanMaxReviewsAction();
+
+    //set parameters to the inicial values
+    let newState = {
+      minComments: 0,
+      taxonomyItems: ['Google', 'Booking', 'Trivago']
+    }
+    this.setState(newState);
+    //clean 
+    this.cleanBeforeSubmit(); 
+
+  }
+
   render() {
     return (
         <div className='settings-sections'>
-          <div className='settings-container'>
-            <SettingsForm 
-              handleGoogleFileChange={this.handleGoogleFileChange} 
-              handleBookingFileChange={this.handleBookingFileChange} 
-              handleTrivagoFileChange={this.handleTrivagoFileChange} 
-              handleSubmit={this.handleSubmit}
-              taxonomyItems={this.state.taxonomyItems}
-              onSortEnd={this.onSortEnd}
-              handleSliderChange={this.handleSliderChange}
-              sliderValue = {this.state.minComments}
-              sliderMax = {this.props.maxReviews.max}
-            />
-          </div>
+          <GridContainer alignItems="flex-start" justify="center">
+              <GridItem xs={8}>
+                <h2>Configuración</h2>
+              </GridItem>
+          </GridContainer>
+          <SettingsForm 
+            handleGoogleFileChange={this.handleGoogleFileChange} 
+            handleBookingFileChange={this.handleBookingFileChange} 
+            handleTrivagoFileChange={this.handleTrivagoFileChange} 
+            handleSubmit={this.handleSubmit}
+            handleClean={this.handleClean}
+            taxonomyItems={this.state.taxonomyItems}
+            onSortEnd={this.onSortEnd}
+            handleSliderChange={this.handleSliderChange}
+            sliderValue = {this.state.minComments}
+            sliderMax = {this.props.maxReviews.max}
+          />
         </div>
     );
   }

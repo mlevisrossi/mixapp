@@ -6,7 +6,6 @@ import TextField from '@material-ui/core/TextField';
 import GridContainer from "components/Grid/GridContainer.js";
 import Typography from '@material-ui/core/Typography';
 import SortableComponent from "components/SortableComponent/SortableComponent.js";
-
 import Slider from '@material-ui/core/Slider';
 
 import 'assets/css/views/settingsPage.css';
@@ -35,9 +34,9 @@ export default class SettingsForm extends React.Component {
             this.setState({...this.state,textFileGoogle});
 
         handleGoogleFileChange(e);
-     }
+    }
 
-     getUploadedBookingFileName = (e) => {
+    getUploadedBookingFileName = (e) => {
         const { handleBookingFileChange } = this.props;
         
         let files = e.target.files,
@@ -52,9 +51,9 @@ export default class SettingsForm extends React.Component {
             this.setState({...this.state,textFileBooking});
 
         handleBookingFileChange(e);
-     }
+    }
 
-     getUploadedTrivagoFileName = (e) => {
+    getUploadedTrivagoFileName = (e) => {
         const { handleTrivagoFileChange } = this.props;
         
         let files = e.target.files,
@@ -69,7 +68,19 @@ export default class SettingsForm extends React.Component {
             this.setState({...this.state,textFileTrivago});
 
         handleTrivagoFileChange(e);
-     }
+    }
+
+    clean = (e) => {
+        let newState = { 
+            textFileGoogle: 'Ningun archivo seleccionado',
+            textFileBooking: 'Ningun archivo seleccionado',
+            textFileTrivago: 'Ningun archivo seleccionado',
+        }
+        this.setState(newState);
+
+        this.props.handleClean(e);
+    }
+
 
     
 
@@ -77,18 +88,11 @@ export default class SettingsForm extends React.Component {
         return(
             <div>
             <form>
-
             <GridContainer justify="center" spacing={0} alignItems="flex-start" direction="row">
-                
                 <GridItem xs={4}>
-
-                    <div className='settings-title'>
-                        <h2>Configuración</h2>
-                    </div>
-
                     <div className='title-content'>
                         <h3>
-                            Subir archivos
+                            Archivos de datos
                             <br />
                         </h3>
                     </div>
@@ -144,7 +148,12 @@ export default class SettingsForm extends React.Component {
 
                     <div>
                         <br />
-                        <Typography id="labelSlider" className='labelSlider' >Descartar hoteles con un minimo de comentarios </Typography>
+                        <div className='title-content'>
+                            <h4>
+                                Descartar hoteles con un mínimo de comentarios
+                                <br />
+                            </h4>
+                        </div>
                         <Slider
                             track="inverted"
                             value={this.props.sliderValue}
@@ -160,13 +169,8 @@ export default class SettingsForm extends React.Component {
                 </GridItem>
 
                 <GridItem xs={3}>
-
-                    <div className='settings-title'>
-                        <h2>   </h2>
-                    </div>
                     <div className='title-content'>
                     <h3>
-                        <br />
                         Orden de Preferencia
                         <br />
                     </h3>
@@ -179,12 +183,14 @@ export default class SettingsForm extends React.Component {
 
             <GridContainer justify="center">
                 <GridItem xs={1} >
-                    
-                    <div align-items="center">
-                        <Button color="primary" onClick={this.props.handleSubmit}>
+                        <Button className='applyButton' onClick={this.props.handleSubmit}>
                             Aplicar
                         </Button>
-                    </div>
+                </GridItem>
+                <GridItem xs={1} >
+                        <Button className='applyButton' onClick={this.clean}>
+                            Limpiar
+                        </Button>
                 </GridItem>
             </GridContainer>
             </form>
