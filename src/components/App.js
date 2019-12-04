@@ -19,7 +19,6 @@ class App extends Component {
       <div className="App">
           <Header
             color="transparent"
-            brand="Mica app"
             rightLinks={<HeaderLinks />}
             fixed
             changeColorOnScroll={{

@@ -42,7 +42,7 @@ export class HotelsPage extends React.Component {
     return (
         <div className='hotelsSection' >
             <GridContainer alignItems="flex-start" justify="center">
-              <GridItem xs={8}>
+              <GridItem xs={7}>
                 <div className='settings-title'>
                   <h2>Ordenes de Hoteles</h2>
                   <br />
@@ -52,28 +52,24 @@ export class HotelsPage extends React.Component {
                   tabs={[
                     {
                       tabName: "Google",
-                      tabIcon: Hotel,
                       tabContent: (
                         <List condition={(this.props.fileGoogleSaved.Hoteles)!== undefined} data={this.props.fileGoogleSaved.Hoteles} letter={"G"}/>
                       )
                     },
                     {
                       tabName: "Booking",
-                      tabIcon: Hotel,
                       tabContent: (
                         <List condition={(this.props.fileBookingSaved.Hoteles)!== undefined} data={this.props.fileBookingSaved.Hoteles} letter={"B"}/>
                       )
                     },
                     {
                       tabName: "trivago",
-                      tabIcon: Hotel,
                       tabContent: (
                         <List condition={(this.props.fileTrivagoSaved.Hoteles)!== undefined} data={this.props.fileTrivagoSaved.Hoteles} letter={"T"} />
                       )
                     },
                     {
                       tabName: "Orden total",
-                      tabIcon: Hotel,
                       tabContent: (
                         <TotalOrderList 
                           condition={(this.props.totalOrder.totalOrder)!== undefined} 

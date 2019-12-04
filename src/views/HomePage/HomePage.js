@@ -12,21 +12,23 @@ import HotelsPage from "views/HotelsPage/HotelsPage.js";
 
 import styles from "assets/jss/material-kit-react/views/homePage.js";
 
+import logo from "assets/img/logo.png";
+
 const useStyles = makeStyles(styles);
 
 export default function HomePage(props) {
   const classes = useStyles();
   return (
     <div>
-      <Parallax small filter image={require("assets/img/vacations.jpg")}>
+      <Parallax small image={require("assets/img/background03.jpg")}>
       <div className={classes.container}>
           <GridContainer>
             <GridItem>
               <div className={classes.brand}>
-                <h1 className={classes.title}>Mica App.</h1>
-                <h3 className={classes.subtitle}>
-                  Integración de servicios de sistemas de reputación
-                </h3>
+                <h1 className={classes.title}>M I X A P P</h1>
+                <h2 className={classes.subtitle}>
+                  <b>Integración de servicios de sistemas de reputación</b>
+                </h2>
               </div>
             </GridItem>
           </GridContainer>

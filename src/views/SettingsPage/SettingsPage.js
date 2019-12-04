@@ -289,7 +289,7 @@ export class SettingsPage extends React.Component {
     return (
         <div className='settings-sections'>
           <GridContainer alignItems="flex-start" justify="center">
-              <GridItem xs={8}>
+              <GridItem xs={7}>
                 <h2>Configuración</h2>
               </GridItem>
           </GridContainer>

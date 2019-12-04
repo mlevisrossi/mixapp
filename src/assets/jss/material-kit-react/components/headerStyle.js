@@ -60,6 +60,8 @@ const headerStyle = {
     color: "inherit",
     padding: "8px 16px",
     letterSpacing: "unset",
+    width: "25% !important",
+    textAlign:"start !important",
     "&:hover,&:focus": {
       color: "inherit",
       background: "transparent"
@@ -146,6 +148,11 @@ const headerStyle = {
     paddingRight: "0px",
     paddingLeft: "0",
     ...transition
+  },
+  logo: {
+    width: "10% !important",
+    height: "10% !important",
+    marginRight: "10px"
   }
 };
 
