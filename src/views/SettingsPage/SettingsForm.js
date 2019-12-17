@@ -14,9 +14,9 @@ export default class SettingsForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            textFileGoogle:'Ningun archivo seleccionado',
-            textFileBooking:'Ningun archivo seleccionado',
-            textFileTrivago:'Ningun archivo seleccionado'
+            textFileGoogle:'Ningún archivo seleccionado',
+            textFileBooking:'Ningún archivo seleccionado',
+            textFileTrivago:'Ningún archivo seleccionado'
         };
     }
 
@@ -34,6 +34,7 @@ export default class SettingsForm extends React.Component {
             this.setState({...this.state,textFileGoogle});
 
         handleGoogleFileChange(e);
+        
     }
 
     getUploadedBookingFileName = (e) => {
@@ -72,15 +73,18 @@ export default class SettingsForm extends React.Component {
 
     clean = (e) => {
         let newState = { 
-            textFileGoogle: 'Ningun archivo seleccionado',
-            textFileBooking: 'Ningun archivo seleccionado',
-            textFileTrivago: 'Ningun archivo seleccionado',
+            textFileGoogle: 'Ningún archivo seleccionado',
+            textFileBooking: 'Ningún archivo seleccionado',
+            textFileTrivago: 'Ningún archivo seleccionado',
         }
         this.setState(newState);
 
         this.props.handleClean(e);
     }
 
+    onInputClick = (event) => {
+        event.target.value = '';
+    }
 
     
 
@@ -100,7 +104,7 @@ export default class SettingsForm extends React.Component {
                         <Button variant="contained" component="label" color="white" className='filebutton'>
                             Google 
                             <PublishIcon />
-                            <input type="file" accept="text/plain, application/json" style={{ display: "none" }} onChange={this.getUploadedGoogleFileName}/>
+                            <input type="file" accept="text/plain, application/json" style={{ display: "none" }} onChange={this.getUploadedGoogleFileName} onClick={this.onInputClick}/>
                         </Button>
                         <TextField
                             id="standard-read-only-input1"
@@ -116,7 +120,7 @@ export default class SettingsForm extends React.Component {
                         <Button variant="contained" component="label" color="white" className='filebutton' >
                             Booking 
                             <PublishIcon />
-                            <input type="file" accept="text/plain, application/json" style={{ display: "none" }} onChange={this.getUploadedBookingFileName}/>
+                            <input type="file" accept="text/plain, application/json" style={{ display: "none" }} onChange={this.getUploadedBookingFileName} onClick={this.onInputClick}/>
                         </Button>
                         <TextField
                             id="standard-read-only-input2"
@@ -133,7 +137,7 @@ export default class SettingsForm extends React.Component {
                         <Button variant="contained" component="label" color="white" className='filebutton'>
                             Trivago 
                             <PublishIcon />
-                            <input type="file" accept="text/plain, application/json" style={{ display: "none" }} onChange={this.getUploadedTrivagoFileName}/>
+                            <input type="file" accept="text/plain, application/json" style={{ display: "none" }} onChange={this.getUploadedTrivagoFileName} onClick={this.onInputClick}/>
                         </Button>
                         <TextField
                             id="standard-read-only-input3"
@@ -150,7 +154,7 @@ export default class SettingsForm extends React.Component {
                         <br />
                         <div className='title-content'>
                             <h4>
-                                Descartar hoteles con un mínimo de comentarios
+                                Descartar hoteles con un mínimo de reseñas
                                 <br />
                             </h4>
                         </div>

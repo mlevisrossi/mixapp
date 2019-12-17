@@ -19,7 +19,7 @@ import 'assets/css/views/hotelsPage.css';
 function List(props) {
   let condition = props.condition;
   if (condition){
-    return <ListContainer data={(props.data)} pageLimit={10} letter={(props.letter)} totalOrder={false}/>;
+    return <ListContainer data={(props.data)} pageLimit={10} letter={(props.letter)} totalOrder={false} maxRating={props.maxRating} />;
   }
   return null;
 };
@@ -53,19 +53,19 @@ export class HotelsPage extends React.Component {
                     {
                       tabName: "Google",
                       tabContent: (
-                        <List condition={(this.props.fileGoogleSaved.Hoteles)!== undefined} data={this.props.fileGoogleSaved.Hoteles} letter={"G"}/>
+                        <List condition={(this.props.fileGoogleSaved.Hoteles)!== undefined} data={this.props.fileGoogleSaved.Hoteles} letter={"G"} maxRating={5}/>
                       )
                     },
                     {
                       tabName: "Booking",
                       tabContent: (
-                        <List condition={(this.props.fileBookingSaved.Hoteles)!== undefined} data={this.props.fileBookingSaved.Hoteles} letter={"B"}/>
+                        <List condition={(this.props.fileBookingSaved.Hoteles)!== undefined} data={this.props.fileBookingSaved.Hoteles} letter={"B"} maxRating={10}/>
                       )
                     },
                     {
                       tabName: "trivago",
                       tabContent: (
-                        <List condition={(this.props.fileTrivagoSaved.Hoteles)!== undefined} data={this.props.fileTrivagoSaved.Hoteles} letter={"T"} />
+                        <List condition={(this.props.fileTrivagoSaved.Hoteles)!== undefined} data={this.props.fileTrivagoSaved.Hoteles} letter={"T"} maxRating={10}/>
                       )
                     },
                     {

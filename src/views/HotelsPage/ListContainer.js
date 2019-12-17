@@ -50,27 +50,29 @@ export default class ListContainer extends React.Component {
         return (
             <div>
               <div>
-                <HotelsList hotelsList={(this.state.currentData)} className='textCenter' letter={(this.props.letter)} totalOrder={(this.props.totalOrder)}/>
+                <HotelsList hotelsList={(this.state.currentData)} className='textCenter' letter={(this.props.letter)} maxRating={(this.props.maxRating)} totalOrder={(this.props.totalOrder)}/>
               </div>
-              <div className='paginationDiv'> 
-                <ReactPaginate
-                    previousLabel={'PREV'}
-                    nextLabel={'NEXT'}
-                    breakLabel={'...'}
-                    breakClassName={'paginationLink'}
-                    pageCount={this.state.pageCount}
-                    marginPagesDisplayed={1}
-                    pageRangeDisplayed={3}
-                    onPageChange={this.handlePageClick}
-                    pageClassName={'paginationLink'}
-                    containerClassName={'pagination'}
-                    subContainerClassName={'paginationLink'}
-                    activeClassName={'active'}
-                    disabledClassName={'disabled'}
-                    previousClassName={'paginationLink'}
-                    nextClassName={'paginationLink'}
-                />
-              </div> 
+              {this.state.currentData.length > 0 ?
+                <div className='paginationDiv'> 
+                  <ReactPaginate
+                      previousLabel={'PREV'}
+                      nextLabel={'NEXT'}
+                      breakLabel={'...'}
+                      breakClassName={'paginationLink'}
+                      pageCount={this.state.pageCount}
+                      marginPagesDisplayed={1}
+                      pageRangeDisplayed={3}
+                      onPageChange={this.handlePageClick}
+                      pageClassName={'paginationLink'}
+                      containerClassName={'pagination'}
+                      subContainerClassName={'paginationLink'}
+                      activeClassName={'active'}
+                      disabledClassName={'disabled'}
+                      previousClassName={'paginationLink'}
+                      nextClassName={'paginationLink'}
+                  />
+                </div>
+              : null}
             </div>
         )
     }

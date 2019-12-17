@@ -10,6 +10,8 @@ import SettingsForm from "views/SettingsPage/SettingsForm.js";
 
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
+import Notification from "components/Notification/Notification.js";
+import Snackbar from '@material-ui/core/Snackbar';
 
 import { compare, findMaxReviews } from "utils/fileUtils.js";
 import { createDictionary } from "utils/dictionary.js";
@@ -40,7 +42,10 @@ export class SettingsPage extends React.Component {
     super(props);
     this.state = {
       taxonomyItems: ['Google', 'Booking', 'Trivago'],
-      minComments: 0
+      minComments: 0,
+      error: false,
+      errorMessage: 'Error',
+      loading: false
     }
   }
 
@@ -231,6 +236,8 @@ export class SettingsPage extends React.Component {
         }
       
         this.getResultAsync(postData);
+    } else {
+      this.showError("Por favor, ingrese un archivo para cada sitio.");
     }
   }
 
@@ -249,16 +256,21 @@ export class SettingsPage extends React.Component {
           },
           body: data,
       })
-        .then((response) => response.json())
-          .then((responseJson) => {
+        .then((response) => {
+          if(response.ok){
+           response.json()
+           .then((responseJson) => {
             //guardar en redux el resultado
-            console.log(responseJson);
             addTotalOrderAction(responseJson);
+            this.showLoading();
           })
-          .catch((error) => {
-            console.error(error);
-          });
-
+          } else {
+              this.showError("Se ha producido un error en el servidor.");
+          }
+        })
+        .catch((error) => {
+          alert("error!!");
+        });
       })();
   
   }
@@ -285,6 +297,26 @@ export class SettingsPage extends React.Component {
 
   }
 
+  handleClose = (event) => {
+    this.setState({...this.state, error: false});
+  }
+
+  handleCloseLoading = (event) => {
+    this.setState({...this.state, loading: false});
+  }
+
+  showError = (message) => {
+    let newState = {
+      error: true,
+      errorMessage: message
+    }
+    this.setState(newState);
+  }
+
+  showLoading = () => {
+    this.setState({...this.state, loading: true});
+  }
+
   render() {
     return (
         <div className='settings-sections'>
@@ -305,6 +337,38 @@ export class SettingsPage extends React.Component {
             sliderValue = {this.state.minComments}
             sliderMax = {this.props.maxReviews.max}
           />
+
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+          }}
+          open={this.state.error}
+          autoHideDuration={5000}
+          onClose={this.handleClose}
+        >
+          <Notification
+            onClose={this.handleClose}
+            variant="error"
+            message={this.state.errorMessage}
+          />
+        </Snackbar>
+
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+          }}
+          open={this.state.loading}
+          autoHideDuration={5000}
+          onClose={this.handleCloseLoading}
+        >
+          <Notification
+            onClose={this.handleCloseLoading}
+            variant="success"
+            message="Calculando los rankings.."
+          />
+      </Snackbar>
         </div>
     );
   }

@@ -56,7 +56,7 @@ function Details(props) {
         <div>
             <div className="mdl-card__supporting-text">
                 <StarIcon titleAccess="Reputación" className='ratingIcon'/>
-                {" " + props.data.rating} <br />
+                {" " + props.data.rating + "/" + props.maxRating} <br />
             </div>
             <div className="mdl-card__supporting-text">
                 <CommentIcon titleAccess="Reseñas" className='reviewsIcon'/>
@@ -114,7 +114,7 @@ export default class HotelsList extends React.Component {
                                 <HotelTitle totalOrder={this.props.totalOrder} hotel={hotel}/>
                               }
                               secondary={
-                                  <Details totalOrder={this.props.totalOrder} data={hotel}/>
+                                  <Details totalOrder={this.props.totalOrder} data={hotel} maxRating={this.props.maxRating}/>
                               }
                           />
                       </ListItem>
