@@ -244,7 +244,7 @@ export class SettingsPage extends React.Component {
   getResultAsync = (postData) => {
 
     const { addTotalOrderAction } = this.props;
-
+    this.showLoading();
     let data = JSON.stringify(postData);
     let request = new Request('http://localhost:8080/multicontext');
     (async () => { 
@@ -262,14 +262,13 @@ export class SettingsPage extends React.Component {
            .then((responseJson) => {
             //guardar en redux el resultado
             addTotalOrderAction(responseJson);
-            this.showLoading();
           })
           } else {
               this.showError("Se ha producido un error en el servidor.");
           }
         })
         .catch((error) => {
-          alert("error!!");
+          this.showError("Se ha producido un error en el servidor.");
         });
       })();
   
@@ -338,37 +337,38 @@ export class SettingsPage extends React.Component {
             sliderMax = {this.props.maxReviews.max}
           />
 
-        <Snackbar
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'right',
-          }}
-          open={this.state.error}
-          autoHideDuration={5000}
-          onClose={this.handleClose}
-        >
-          <Notification
+          <Snackbar
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right',
+            }}
+            open={this.state.error}
+            autoHideDuration={5000}
             onClose={this.handleClose}
-            variant="error"
-            message={this.state.errorMessage}
-          />
-        </Snackbar>
+          >
+            <Notification
+              onClose={this.handleClose}
+              variant="error"
+              message={this.state.errorMessage}
+            />
+          </Snackbar>
 
-        <Snackbar
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'right',
-          }}
-          open={this.state.loading}
-          autoHideDuration={5000}
-          onClose={this.handleCloseLoading}
-        >
-          <Notification
+          <Snackbar
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right',
+            }}
+            open={this.state.loading}
+            autoHideDuration={5000}
             onClose={this.handleCloseLoading}
-            variant="success"
-            message="Calculando los rankings.."
-          />
-      </Snackbar>
+          >
+            <Notification
+              onClose={this.handleCloseLoading}
+              variant="success"
+              message="Calculando los rankings.."
+            />
+          </Snackbar>
+
         </div>
     );
   }
