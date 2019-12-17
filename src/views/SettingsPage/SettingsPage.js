@@ -36,6 +36,7 @@ import {
 import { createDictAction, cleanDictAction } from '../../redux/actions/DictionaryActions.js';
 import { addTotalOrderAction, cleanTotalOrderAction  } from '../../redux/actions/TotalOrderActions.js';
 import { setMaxReviewsAction, cleanMaxReviewsAction  } from '../../redux/actions/MaxReviewsActions.js';
+import { startLoadingAction, endLoadingAction  } from '../../redux/actions/LoadingActions.js';
 
 export class SettingsPage extends React.Component {
   constructor(props) {
@@ -44,8 +45,7 @@ export class SettingsPage extends React.Component {
       taxonomyItems: ['Google', 'Booking', 'Trivago'],
       minComments: 0,
       error: false,
-      errorMessage: 'Error',
-      loading: false
+      errorMessage: 'Error'
     }
   }
 
@@ -243,8 +243,9 @@ export class SettingsPage extends React.Component {
 
   getResultAsync = (postData) => {
 
-    const { addTotalOrderAction } = this.props;
-    this.showLoading();
+    const { addTotalOrderAction, startLoadingAction, endLoadingAction } = this.props;
+    startLoadingAction();
+
     let data = JSON.stringify(postData);
     let request = new Request('http://localhost:8080/multicontext');
     (async () => { 
@@ -262,13 +263,16 @@ export class SettingsPage extends React.Component {
            .then((responseJson) => {
             //guardar en redux el resultado
             addTotalOrderAction(responseJson);
+            endLoadingAction();
           })
           } else {
               this.showError("Se ha producido un error en el servidor.");
+              endLoadingAction();
           }
         })
         .catch((error) => {
           this.showError("Se ha producido un error en el servidor.");
+          endLoadingAction();
         });
       })();
   
@@ -383,7 +387,8 @@ SettingsPage.propTypes = {
   fileTrivagoSaved: PropTypes.object,
   hotelsDict: PropTypes.object,
   totalOrder: PropTypes.object,
-  maxReviews: PropTypes.object
+  maxReviews: PropTypes.object,
+  loading: PropTypes.object
 };
 
 const mapStateToProps = (state) => {
@@ -396,7 +401,8 @@ const mapStateToProps = (state) => {
     fileBookingSaved: state.fileBookingSaved,
     fileTrivagoSaved: state.fileTrivagoSaved,
     totalOrder: state.totalOrder,
-    maxReviews: state.maxReviews
+    maxReviews: state.maxReviews,
+    loading: state.loading
   };
 }
 
@@ -419,7 +425,9 @@ const mapDispatchToProps = (dispatch) => {
     cleanDictAction: () => {dispatch(cleanDictAction());},
     cleanTotalOrderAction: () => {dispatch(cleanTotalOrderAction());},
     setMaxReviewsAction: (maxReviews) => {dispatch(setMaxReviewsAction(maxReviews));},
-    cleanMaxReviewsAction: () => {dispatch(cleanMaxReviewsAction());}
+    cleanMaxReviewsAction: () => {dispatch(cleanMaxReviewsAction());},
+    startLoadingAction: () => {dispatch(startLoadingAction());},
+    endLoadingAction: () => {dispatch(endLoadingAction());}
   }
 }   
 

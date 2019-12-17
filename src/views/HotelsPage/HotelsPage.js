@@ -4,14 +4,11 @@ import PropTypes from 'prop-types';
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
-import Hotel from "@material-ui/icons/Hotel";
 import CustomTabs from "components/CustomTabs/CustomTabs.js";
 import ListContainer from "views/HotelsPage/ListContainer.js";
-import SvgIcon from '@material-ui/core/SvgIcon';
+import BeatLoader from 'react-spinners/BeatLoader';
 
 import { mapToHotelNames } from "utils/dictionary.js";
-
-import googleIcon from "assets/img/google-icon.png";
 
 //css
 import 'assets/css/views/hotelsPage.css';
@@ -26,11 +23,17 @@ function List(props) {
 
 function TotalOrderList(props) {
   let condition = props.condition;
-  if (condition){
+  let loading = props.loading;
+  if (condition && !loading){
     let hotels = mapToHotelNames(props.dict, props.data, props.google, props.booking, props.trivago);
     return <ListContainer data={(hotels)} pageLimit={15} letter={(props.letter)} totalOrder={true}/>;
+  } else {
+    if (loading) {
+      return <div className='loadingDiv'> <BeatLoader sizeUnit={'px'} size={20} color={'#6AACAF'} loading={true} /> </div>;
+    } else {
+      return null;
+    }
   }
-  return null;
 };
 
 export class HotelsPage extends React.Component {
@@ -78,6 +81,7 @@ export class HotelsPage extends React.Component {
                           google={this.props.fileGoogleSaved.Hoteles}
                           booking={this.props.fileBookingSaved.Hoteles}
                           trivago={this.props.fileTrivagoSaved.Hoteles}
+                          loading={this.props.loading.loading}
                         />
                       )
                     }
@@ -95,7 +99,8 @@ HotelsPage.propTypes = {
   fileBookingSaved: PropTypes.object,
   fileTrivagoSaved: PropTypes.object,
   totalOrder: PropTypes.object,
-  hotelsDict: PropTypes.object
+  hotelsDict: PropTypes.object,
+  loading: PropTypes.object
 };
 
 const mapStateToProps = (state) => {
@@ -104,7 +109,8 @@ const mapStateToProps = (state) => {
     fileBookingSaved: state.fileBookingSaved,
     fileTrivagoSaved: state.fileTrivagoSaved,
     totalOrder: state.totalOrder,
-    hotelsDict: state.hotelsDict
+    hotelsDict: state.hotelsDict,
+    loading: state.loading
   };
 }
 
