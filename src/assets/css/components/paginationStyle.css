@@ -1,0 +1,112 @@
+.pagination {
+    display: inline-block;
+    padding-left: 0;
+    margin: 0 0 20px 0;
+    border-radius: 4px;
+}
+
+.paginationItem {
+      display: inline;
+}
+
+.paginationLink {  
+    letter-spacing: unset;
+    border: 0;
+    border-radius: 30px !important;
+    transition: all .3s;
+    padding: 0px 11px;
+    margin: 0 3px;
+    min-width: 30px;
+    height: 30px;
+    min-height: auto;
+    line-height: 30px;
+    font-weight: 400;
+    font-size: 12px;
+    text-transform: uppercase;
+    position: relative;
+    float: left;
+    text-decoration: none;
+    box-sizing: border-box;
+    list-style: none;
+    color: #777;
+}
+
+.paginationLink:hover {
+    cursor: pointer;
+    color: #777;
+    background-color: #E0E0E0;
+    border-color: #E0E0E0;
+}
+.paginationLink:focus {
+    color: #777;
+}
+.paginationLink:hover:focus {
+    z-index: 3;
+    background-color: #E0E0E0;
+    border-color: #E0E0E0;
+}
+
+.info:hover:focus {
+    background-color: #6AACAF;
+    border-color:  #6AACAF;
+    color: #FFFFFF;
+    box-shadow:
+        0 4px 5px 0 rgba(156, 39, 176, 0.14), 0 1px 10px 0 rgba(156, 39, 176, 0.12), 0 2px 4px -1px rgba(156, 39, 176, 0.2);  
+}
+
+.info:focus {
+    z-index: 2;
+    cursor: default;
+}
+.info:hover {
+    z-index: 2;
+    cursor: default;
+}
+.disabled {
+    color: #777;
+    cursor: not-allowed;
+    background-color: #fff;
+    border-color: #ddd;
+}
+
+.active {
+    color: #FFFFFF;
+    background-color: #6AACAF;
+    border-color:  #6AACAF;
+    box-shadow:
+        0 4px 5px 0 rgba(156, 39, 176, 0.14), 0 1px 10px 0 rgba(156, 39, 176, 0.12), 0 2px 4px -1px rgba(156, 39, 176, 0.2);
+}
+.active:hover {
+    color: #FFFFFF;
+    background-color: #6AACAF;
+    border-color:  #6AACAF;
+    box-shadow:
+        0 4px 5px 0 rgba(156, 39, 176, 0.14), 0 1px 10px 0 rgba(156, 39, 176, 0.12), 0 2px 4px -1px rgba(156, 39, 176, 0.2);
+}
+
+.active a{
+    color: #FFFFFF; 
+}
+
+.active a:hover{
+    color: #FFFFFF;
+}
+.active a:focus{
+    color: #FFFFFF;
+}
+
+a {
+    color: #777;
+}
+
+a:hover {
+    color: #777;
+}
+a:focus {
+    color: #777;
+}
+
+.paginationDiv{
+    text-align: center !important;
+}
+  

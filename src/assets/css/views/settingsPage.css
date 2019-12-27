@@ -1,0 +1,81 @@
+
+.settings-title {
+    margin-top: 30px;
+    min-height: 32px;
+    text-decoration: none;
+    color: #3C4858;
+    margin: 1.75rem 0 0.875rem;
+    font-weight: 700;
+    font-family: 'Roboto Slab', 'Times New Roman', 'serif';
+}
+
+.subtitle {
+    font-size: 1.313rem;
+    max-width: 500px;
+    margin: 10px 0 0
+}
+
+.link {
+    text-decoration: none
+}
+
+.textCenter {
+    text-align: center
+}
+
+.settings-container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    width: 100%;
+}
+
+.settings-sections {
+    padding: 70px 0;
+}
+
+.root {
+    width: 300;
+}
+
+.slider {
+    padding: 22px 0px;
+    color:  #F2836B !important;
+}
+
+.labelSlider {
+    padding: 12px 30px;
+    margin: .3125rem 1px;
+}
+
+.filetextfield{
+    width: 62% !important;
+    padding: 6px 4px 7px;
+    color:  #fed987 !important;
+}
+
+.filebutton{
+    height: 32px !important;
+    width: 25% !important;
+    background-color:  #F2836B !important;
+    color: white !important;
+    margin-right: 10px !important;
+    margin-top: 15px !important;
+}
+
+.filetextfield:focus {
+    color:  #fed987 !important;
+}
+.slider{
+    width: 90% !important;
+}
+
+.applyButton {
+    background-color: #F2836B !important;
+    margin: 20px !important;
+}
+
+.title {
+    font-size: 90% !important;
+}

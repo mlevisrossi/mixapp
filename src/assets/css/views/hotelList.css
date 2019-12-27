@@ -1,0 +1,49 @@
+.root {
+  width: 100%;
+  max-width: 360;
+}
+
+.inline {
+  display: inline;
+}
+
+.ratingIcon {
+  color: #E7711B;
+  font-size: 16px;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+}
+
+.priceIcon {
+  color: green;
+  font-size: 16px;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+}
+
+.reviewsIcon {
+  color: #7293E5;
+  font-size: 16px;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+}
+
+.siteAvatar {
+  width: 20px;
+  height: 20px;
+  margin-left: 3px;
+  margin-right: 3px;
+  float: right
+}
+
+.sitesDiv {
+  align-content: left;
+}
+
+.itemAvatar {
+  color: white;
+  background-color: #F6A695 !important;
+}
